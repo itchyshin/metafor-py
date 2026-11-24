@@ -1,0 +1,13 @@
+# graft's local graph cache — regenerable, not committed (run `graft build`).
+/graft/
+.venv/
+build/
+__pycache__/
+*.py[cod]
+*.egg-info/
+docs/_build/
+.unlazy/
+.DS_Store
+.ignore
+/examples/bcg.jl
+/examples/phylogeny.jl

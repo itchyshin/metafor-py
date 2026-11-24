@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="552.0" viewBox="0 0 1120 552.0">
+<style>text{font:14px system-ui,sans-serif;fill:#1b2d3a}.small{font-size:12px}.ci{stroke:#345f74;stroke-width:2}.summary{stroke:#a13c31;fill:#a13c31}.axis{stroke:#8a9aa3;stroke-width:1}</style>
+<text x="20" y="32" font-size="20" font-weight="700">BCG study effects</text>
+<text x="20" y="54" class="small">Study log risk ratios with 95% normal intervals</text>
+<line x1="759.8479103223181" y1="68" x2="759.8479103223181" y2="498.0" class="axis" stroke-dasharray="4 4"/>
+<text x="20" y="97.0">Aronson</text>
+<line x1="460.24960197056197" y1="92.0" x2="794.0275933117316" y2="92.0" class="ci"/><rect x="622.1385976411468" y="87.0" width="10" height="10" fill="#345f74"/>
+<text x="20" y="125.0">Ferguson &amp; Simes</text>
+<line x1="394.2483022234262" y1="120.0" x2="652.281752946765" y2="120.0" class="ci"/><rect x="518.2650275850956" y="115.0" width="10" height="10" fill="#345f74"/>
+<text x="20" y="153.0">Rosenthal et al</text>
+<line x1="370.17857142857144" y1="148.0" x2="747.179273456392" y2="148.0" class="ci"/><rect x="553.6789224424817" y="143.0" width="10" height="10" fill="#345f74"/>
+<text x="20" y="181.0">Hart &amp; Sutherland</text>
+<line x1="503.3562273595125" y1="176.0" x2="586.1027114967326" y2="176.0" class="ci"/><rect x="539.7294694281225" y="171.0" width="10" height="10" fill="#345f74"/>
+<text x="20" y="209.0">Frimodt-Moller et al</text>
+<line x1="661.1967984230344" y1="204.0" x2="793.571129131507" y2="204.0" class="ci"/><rect x="722.3839637772707" y="199.0" width="10" height="10" fill="#345f74"/>
+<text x="20" y="237.0">Stein &amp; Aronson</text>
+<line x1="618.2331210572113" y1="232.0" x2="666.8432696919358" y2="232.0" class="ci"/><rect x="637.5381953745734" y="227.0" width="10" height="10" fill="#345f74"/>
+<text x="20" y="265.0">Vandiviere et al</text>
+<line x1="379.8433935274815" y1="260.0" x2="656.0886855000374" y2="260.0" class="ci"/><rect x="512.9660395137594" y="255.0" width="10" height="10" fill="#345f74"/>
+<text x="20" y="293.0">TPT Madras</text>
+<line x1="743.2225370179681" y1="288.0" x2="780.0405067270258" y2="288.0" class="ci"/><rect x="756.6315218724969" y="283.0" width="10" height="10" fill="#345f74"/>
+<text x="20" y="321.0">Coetzee &amp; Berjak</text>
+<line x1="620.3169635334821" y1="316.0" x2="759.2792291218391" y2="316.0" class="ci"/><rect x="684.7980963276605" y="311.0" width="10" height="10" fill="#345f74"/>
+<text x="20" y="349.0">Rosenthal et al</text>
+<line x1="476.16909170914374" y1="344.0" x2="634.2432319726652" y2="344.0" class="ci"/><rect x="550.2061618409044" y="339.0" width="10" height="10" fill="#345f74"/>
+<text x="20" y="377.0">Comstock et al</text>
+<line x1="676.6211988034579" y1="372.0" x2="741.791583734489" y2="372.0" class="ci"/><rect x="704.2063912689734" y="367.0" width="10" height="10" fill="#345f74"/>
+<text x="20" y="405.0">Comstock &amp; Webster</text>
+<line x1="612.9590805237453" y1="400.0" x2="1039.8214285714284" y2="400.0" class="ci"/><rect x="821.390254547587" y="395.0" width="10" height="10" fill="#345f74"/>
+<text x="20" y="433.0">Comstock et al</text>
+<line x1="679.1088097303256" y1="428.0" x2="835.4195918563958" y2="428.0" class="ci"/><rect x="752.2642007933607" y="423.0" width="10" height="10" fill="#345f74"/>
+<line x1="20" y1="465.0" x2="1080.0" y2="465.0" class="axis"/><text x="20" y="485.0" font-weight="700">REML mean</text>
+<line x1="481.2869060299174" y1="480.0" x2="825.1537963604762" y2="480.0" class="summary" stroke-dasharray="5 4" opacity=".65"/><polygon points="653.2203511951968,472.0 705.802791815257,480.0 653.2203511951968,488.0 600.6379105751366,480.0" class="summary"/><text x="330.0" y="536.0" class="small">log risk ratio (negative values favor vaccination)</text></svg>
