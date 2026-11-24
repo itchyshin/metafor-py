@@ -85,6 +85,42 @@ class TableMetaResult:
     formula: str
 
 
+@dataclass(frozen=True)
+class DependentMetaResult:
+    """Result for normal-normal GLS and dependent-effects REML models."""
+    beta: np.ndarray
+    covariance: np.ndarray
+    variance_components: dict
+    component_kernels: dict
+    marginal_covariance: np.ndarray
+    qe: float
+    qep: float
+    converged: bool
+    method: str
+    row_indices: tuple
+    design_columns: tuple = ()
+    outcome_covariance: np.ndarray | None = None
+
+    @property
+    def se(self):
+        return np.sqrt(np.diag(self.covariance))
+
+    def interval(self, level=0.95):
+        if not 0 < level < 1:
+            raise ValueError("level must be between zero and one")
+        z = _normal_quantile((1 + level) / 2)
+        return self.beta - z * self.se, self.beta + z * self.se
+
+
+@dataclass(frozen=True)
+class DependentTableMetaResult:
+    result: DependentMetaResult
+    row_indices: tuple
+    row_ids: tuple
+    design_columns: tuple
+    formula: str
+
+
 def fit_meta_formula(data, formula, vi="vi", method="REML"):
     """Fit from a pandas table and Patsy formula, retaining input row identity."""
     try:

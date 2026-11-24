@@ -7,3 +7,4 @@ A small native Python implementation of selected methods from R metafor.
    :maxdepth: 2
 
    bcg
+   dependent

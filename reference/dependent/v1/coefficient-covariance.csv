@@ -1,0 +1,13 @@
+"model","row","column","estimate"
+"correlated-gls","intrcpt","intrcpt",0.0219606529468959
+"correlated-gls","intrcpt","x",0.00848615634683192
+"correlated-gls","x","intrcpt",0.00848615634683192
+"correlated-gls","x","x",0.0349758985861891
+"nested-reml","intrcpt","intrcpt",0.0128346129443194
+"nested-reml","intrcpt","x",0.000555555555555556
+"nested-reml","x","intrcpt",0.000555555555555556
+"nested-reml","x","x",0.0192398956033478
+"berkey-un","outcomebenefit","outcomebenefit",0.0210089356153975
+"berkey-un","outcomebenefit","outcomeharm",0.0126827294469662
+"berkey-un","outcomeharm","outcomebenefit",0.0126827294469662
+"berkey-un","outcomeharm","outcomeharm",0.0144088288980808

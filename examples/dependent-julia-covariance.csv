@@ -1,0 +1,13 @@
+model,row,column,estimate
+correlated-gls,intrcpt,intrcpt,0.021960652946895844
+correlated-gls,intrcpt,x,0.0084861563468319121
+correlated-gls,x,intrcpt,0.0084861563468319121
+correlated-gls,x,x,0.034975898586189116
+nested-reml,intrcpt,intrcpt,0.012834612950994943
+nested-reml,intrcpt,x,0.0005555555555555549
+nested-reml,x,intrcpt,0.0005555555555555549
+nested-reml,x,x,0.019239895613367426
+berkey-un,outcomebenefit,outcomebenefit,0.021008938998306612
+berkey-un,outcomebenefit,outcomeharm,0.012682732101973579
+berkey-un,outcomeharm,outcomebenefit,0.012682732101973581
+berkey-un,outcomeharm,outcomeharm,0.014408834786005969

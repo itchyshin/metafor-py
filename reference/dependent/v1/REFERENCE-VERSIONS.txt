@@ -1,0 +1,15 @@
+R 4.6.0
+metafor 5.2-1
+metadat 1.6.0
+Matrix 1.7.5
+numDeriv 2016.8.1.1
+nlme 3.1.169
+mathjaxr 2.0.0
+pbapply 1.7.4
+digest 0.6.39
+optimizer: metafor 5.2-1 rma.mv defaults (nlminb)
+random data seeds: correlated GLS 1101; nested 42; Berkey-style 42
+GLS generating beta: intercept=0.20; x=0.12
+nested generating beta: intercept=0.35; x=0.18; study variance=0.1225; nested-effect variance=0.04
+Berkey-style generating beta: benefit=0.40; harm=0.25; Sigma=[[0.20,0.07],[0.07,0.12]]
+Berkey-style sampling correlation within study: 0.30
