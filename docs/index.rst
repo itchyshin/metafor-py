@@ -7,9 +7,18 @@ The project follows the R package's question-to-analysis path: calculate study e
 
 The tutorials below use pinned R reference inputs shared with Metafor.jl. The wording and plots are original. Local comparison pages show R, Python, and Julia estimates side by side.
 
-Start with the `BCG effect-size tutorial <examples/bcg-effects.html>`_, then follow the tutorials from model fitting and meta-regression through intervals and forest-plot data. Continue with correlated effects, nested effects, two outcomes, and the supplied-correlation phylogenetic cases. Each page includes a runnable command and interpretation.
+Start with the `BCG effect-size tutorial <examples/bcg-effects.html>`_, then follow 20 focused topic pages from model fitting and meta-regression through intervals and forest-plot data. Continue with correlated effects, nested effects, two outcomes, and the supplied-correlation phylogenetic cases. Each page includes a runnable command and interpretation.
 
-Compare all three implementations: `BCG <_static/comparisons/bcg-comparison.html>`_ · `dependent effects <_static/comparisons/dependent-comparison.html>`_ · `phylogenetic models <_static/comparisons/phylogeny-comparison.html>`_. See also the `Metafor.jl documentation <https://itchyshin.github.io/Metafor.jl/>`_ and `Julia source repository <https://github.com/itchyshin/Metafor.jl>`_.
+To try the package from a checkout, run ``python -m pip install -e '.[tables]'`` from the repository root. The core examples need Python and NumPy; the table and formula adapter uses optional pandas and Patsy dependencies.
+
+Choose a starting point
+-----------------------
+
+* To analyze two-group counts, start with `BCG effect sizes <examples/bcg-effects.html>`_.
+* To model dependent outcomes, see `correlated sampling errors <examples/dependent-gls.html>`_.
+* To use a species correlation matrix, see the `phylogenetic model <examples/phylogeny.html>`_.
+
+Compare all three implementations: `BCG <_static/comparisons/bcg-comparison.html>`_, `dependent effects <_static/comparisons/dependent-comparison.html>`_, `phylogenetic models <_static/comparisons/phylogeny-comparison.html>`_, and `effect sizes <_static/comparisons/effect-size-comparison.html>`_. See also the `Metafor.jl documentation <https://itchyshin.github.io/Metafor.jl/>`_ and `Julia source repository <https://github.com/itchyshin/Metafor.jl>`_.
 
 .. note::
 

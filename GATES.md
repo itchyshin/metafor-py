@@ -6,8 +6,8 @@ Scope: verify the native Python port, its Julia/R parity examples, references, a
 
 - [x] G1: Python package suite passes
   CHECK: OPENBLAS_NUM_THREADS=1 ./.unlazy/clean-python/bin/python -m pytest -q
-  EXPECT: 37 passed
-  EVIDENCE: exit=0; shell=/bin/sh; cwd=/Users/z3437171/Dropbox/Github Local/metafor-py; path=b12a711c1484/40 entries; output=-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html | 37 passed, 3 warnings in 3.26s
+  EXPECT: 51 passed
+  EVIDENCE: exit=0; shell=/bin/sh; cwd=/Users/z3437171/Dropbox/Github Local/metafor-py; path=b12a711c1484/40 entries; output=-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html | 51 passed, 3 warnings in 28.87s
 
 - [x] G2: Python tutorial builds with warnings treated as errors
   CHECK: OPENBLAS_NUM_THREADS=1 ./.venv/bin/python -m sphinx -W --keep-going -b html docs docs/_build/html
@@ -37,19 +37,14 @@ Scope: verify the native Python port, its Julia/R parity examples, references, a
 - [x] G7: twenty tutorial pages build and four comparison pages are linked into the generated Python site
   CHECK: python3 -c "from pathlib import Path; p=Path('docs/_build/html/examples'); names=[x for x in Path('docs/examples').glob('*.md') if x.stem!='index']; c=Path('docs/_build/html/_static/comparisons'); assert len(names)==20 and all((p/(x.stem+'.html')).is_file() for x in names); assert all((c/n).is_file() for n in ['bcg-comparison.html','dependent-comparison.html','phylogeny-comparison.html','effect-size-comparison.html']); print('PYTHON_20_TUTORIALS_AND_PARITY_ARTIFACT_OK')"
   EXPECT: PYTHON_20_TUTORIALS_AND_PARITY_ARTIFACT_OK
-  EVIDENCE: exit=0; warning-as-error Sphinx build succeeded; twenty topic pages and four comparison HTML files verified.
+  EVIDENCE: exit=0; shell=/bin/sh; cwd=/Users/z3437171/Dropbox/Github Local/metafor-py; path=b12a711c1484/40 entries; output=PYTHON_20_TUTORIALS_AND_PARITY_ARTIFACT_OK
 
-- [x] G8: the Python GitHub Pages workflow parses as YAML
-  CHECK: ruby -e 'require "yaml"; YAML.load_file(".github/workflows/pages.yml"); puts "PAGES_WORKFLOW_YAML_OK"'
+- [x] G8: the Python documentation-check workflow parses as YAML
+  CHECK: ruby -e 'require "yaml"; YAML.load_file(".github/workflows/docs.yml"); puts "PAGES_WORKFLOW_YAML_OK"'
   EXPECT: PAGES_WORKFLOW_YAML_OK
   EVIDENCE: exit=0; shell=/bin/sh; cwd=/Users/z3437171/Dropbox/Github Local/metafor-py; path=b12a711c1484/40 entries; output=PAGES_WORKFLOW_YAML_OK
 
-- [x] G7: all twenty tutorial pages build and the comparison pages are linked into the generated Python site
-  CHECK: python3 -c "from pathlib import Path; p=Path('docs/_build/html/examples'); names=[x for x in Path('docs/examples').glob('*.md') if x.stem!='index']; c=Path('docs/_build/html/_static/comparisons'); assert len(names)==20 and all((p/(x.stem+'.html')).is_file() for x in names); assert all((c/n).is_file() for n in ['bcg-comparison.html','dependent-comparison.html','phylogeny-comparison.html','effect-size-comparison.html']); print('PYTHON_20_TUTORIALS_AND_PARITY_ARTIFACT_OK')"
-  EXPECT: PYTHON_20_TUTORIALS_AND_PARITY_ARTIFACT_OK
-  EVIDENCE: exit=0; warning-as-error Sphinx build succeeded; twenty topic pages and four comparison HTML files verified.
-
 - [x] G9: pinned R effect sizes and pooled models match both native implementations
-  CHECK: run both native `examples/effect-sizes.* --case=all|scale|zero-correction` commands, then `python tools/compare_effect_sizes.py`
+  CHECK: PYTHONPATH=src python examples/effect-sizes.py --case=all && PYTHONPATH=src python examples/effect-sizes.py --case=scale && PYTHONPATH=src python examples/effect-sizes.py --case=zero-correction && (cd ../Metafor.jl && julia --project examples/effect-sizes.jl --case=all && julia --project examples/effect-sizes.jl --case=scale && julia --project examples/effect-sizes.jl --case=zero-correction) && python tools/compare_effect_sizes.py
   EXPECT: EFFECT_SIZE_PARITY_OK checks=316
-  EVIDENCE: exit=0; max absolute differences effect=3.9968028886505635e-15, model=5.4569682106375694e-12, correction=4.884981308350689e-15; tolerances 1e-12 for study effects/corrections and 1e-8 for models; includes all three BCG measures.
+  EVIDENCE: exit=0; shell=/bin/sh; cwd=/Users/z3437171/Dropbox/Github Local/metafor-py; path=b12a711c1484/40 entries; output=EFFECT_SIZE_EXAMPLE_OK case=zero-correction rows=16 /Users/z3437171/Dropbox/Github Local/Metafor.jl/examples/generated/effect-sizes/julia-zero-correction.csv | EFFECT_SIZE_PARITY_OK checks=316 max={'effect': 3.9968028886505635e-15, 'model':
