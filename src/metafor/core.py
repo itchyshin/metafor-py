@@ -217,6 +217,61 @@ def escalc_rr(ai, bi, ci, di, add=0.5, to="only0"):
     return yi,vi
 
 
+def _escalc_2x2(ai, bi, ci, di, measure, add, to):
+    columns = [_float_array(values) for values in (ai, bi, ci, di)]
+    if any(column.ndim != 1 for column in columns) or len({len(column) for column in columns}) != 1:
+        raise ValueError("four equally sized count vectors are required")
+    x = np.column_stack(columns)
+    if np.any(np.isfinite(x) & (x < 0)):
+        raise ValueError("counts must be nonnegative")
+    if np.any(np.isfinite(x) & (x != np.floor(x))):
+        raise ValueError("counts must be integers")
+    try:
+        correction = float(add)
+    except (TypeError, ValueError) as error:
+        raise ValueError("add must be a finite nonnegative number") from error
+    if not math.isfinite(correction) or correction < 0:
+        raise ValueError("add must be a finite nonnegative number")
+    if to not in ("only0", "all", "if0all", "none"):
+        raise ValueError("unsupported zero-cell policy")
+
+    yi = np.full(len(x), np.nan)
+    vi = np.full(len(x), np.nan)
+    any_zero = bool(np.any(np.isfinite(x) & (x == 0)))
+    for i, row in enumerate(x):
+        if not np.all(np.isfinite(row)):
+            continue
+        a, b, c, d = row
+        table_has_zero = bool(np.any(row == 0))
+        adjust = to == "all" or (to == "only0" and table_has_zero) or (to == "if0all" and any_zero)
+        if adjust:
+            a, b, c, d = a + correction, b + correction, c + correction, d + correction
+
+        if measure == "OR":
+            if min(a, b, c, d) <= 0:
+                continue
+            yi[i] = math.log(a) + math.log(d) - math.log(b) - math.log(c)
+            vi[i] = 1 / a + 1 / b + 1 / c + 1 / d
+        else:
+            n1, n2 = a + b, c + d
+            if n1 <= 0 or n2 <= 0:
+                continue
+            p1, p2 = a / n1, c / n2
+            yi[i] = p1 - p2
+            vi[i] = p1 * (1 - p1) / n1 + p2 * (1 - p2) / n2
+    return yi, vi
+
+
+def escalc_or(ai, bi, ci, di, add=0.5, to="only0"):
+    """Return log odds ratios and large-sample sampling variances from 2x2 counts."""
+    return _escalc_2x2(ai, bi, ci, di, "OR", add, to)
+
+
+def escalc_rd(ai, bi, ci, di, add=0.5, to="only0"):
+    """Return risk differences and binomial sampling variances from 2x2 counts."""
+    return _escalc_2x2(ai, bi, ci, di, "RD", add, to)
+
+
 def fit_meta(yi, vi, X=None, method="REML"):
     """Fit normal-normal FE or intercept-only/matrix REML by scalar search."""
     y=_float_array(yi); v=_float_array(vi)

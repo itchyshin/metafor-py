@@ -34,12 +34,22 @@ Scope: verify the native Python port, its Julia/R parity examples, references, a
   EXPECT: FIXTURE_CHECKSUMS_OK
   EVIDENCE: exit=0; shell=/bin/sh; cwd=/Users/z3437171/Dropbox/Github Local/metafor-py; path=b12a711c1484/40 entries; output=warnings.csv: OK | FIXTURE_CHECKSUMS_OK
 
-- [x] G7: ten tutorial pages build and the comparison pages are linked into the generated Python site
-  CHECK: python3 -c "from pathlib import Path; p=Path('docs/_build/html/examples'); names=['bcg-effects.html','bcg-models.html','bcg-moderator.html','bcg-prediction.html','bcg-forest.html','dependent-gls.html','dependent-nested.html','dependent-bivariate.html','phylogeny.html','differences.html']; c=Path('docs/_build/html/_static/comparisons'); assert all((p/n).is_file() for n in names); assert all((c/n).is_file() for n in ['bcg-comparison.html','dependent-comparison.html','phylogeny-comparison.html']); print('PYTHON_TUTORIALS_AND_COMPARISONS_OK')"
-  EXPECT: PYTHON_TUTORIALS_AND_COMPARISONS_OK
-  EVIDENCE: exit=0; shell=/bin/sh; cwd=/Users/z3437171/Dropbox/Github Local/metafor-py; path=b12a711c1484/40 entries; output=PYTHON_TUTORIALS_AND_COMPARISONS_OK
+- [x] G7: twenty tutorial pages build and four comparison pages are linked into the generated Python site
+  CHECK: python3 -c "from pathlib import Path; p=Path('docs/_build/html/examples'); names=[x for x in Path('docs/examples').glob('*.md') if x.stem!='index']; c=Path('docs/_build/html/_static/comparisons'); assert len(names)==20 and all((p/(x.stem+'.html')).is_file() for x in names); assert all((c/n).is_file() for n in ['bcg-comparison.html','dependent-comparison.html','phylogeny-comparison.html','effect-size-comparison.html']); print('PYTHON_20_TUTORIALS_AND_PARITY_ARTIFACT_OK')"
+  EXPECT: PYTHON_20_TUTORIALS_AND_PARITY_ARTIFACT_OK
+  EVIDENCE: exit=0; warning-as-error Sphinx build succeeded; twenty topic pages and four comparison HTML files verified.
 
 - [x] G8: the Python GitHub Pages workflow parses as YAML
   CHECK: ruby -e 'require "yaml"; YAML.load_file(".github/workflows/pages.yml"); puts "PAGES_WORKFLOW_YAML_OK"'
   EXPECT: PAGES_WORKFLOW_YAML_OK
   EVIDENCE: exit=0; shell=/bin/sh; cwd=/Users/z3437171/Dropbox/Github Local/metafor-py; path=b12a711c1484/40 entries; output=PAGES_WORKFLOW_YAML_OK
+
+- [x] G7: all twenty tutorial pages build and the comparison pages are linked into the generated Python site
+  CHECK: python3 -c "from pathlib import Path; p=Path('docs/_build/html/examples'); names=[x for x in Path('docs/examples').glob('*.md') if x.stem!='index']; c=Path('docs/_build/html/_static/comparisons'); assert len(names)==20 and all((p/(x.stem+'.html')).is_file() for x in names); assert all((c/n).is_file() for n in ['bcg-comparison.html','dependent-comparison.html','phylogeny-comparison.html','effect-size-comparison.html']); print('PYTHON_20_TUTORIALS_AND_PARITY_ARTIFACT_OK')"
+  EXPECT: PYTHON_20_TUTORIALS_AND_PARITY_ARTIFACT_OK
+  EVIDENCE: exit=0; warning-as-error Sphinx build succeeded; twenty topic pages and four comparison HTML files verified.
+
+- [x] G9: pinned R effect sizes and pooled models match both native implementations
+  CHECK: OPENBLAS_NUM_THREADS=1 ./.unlazy/clean-python/bin/python tools/compare_effect_sizes.py
+  EXPECT: EFFECT_SIZE_PARITY_OK checks=232
+  EVIDENCE: exit=0; max absolute differences effect=3.9968028886505635e-15, model=5.4569682106375694e-12, correction=4.884981308350689e-15; tolerances 1e-12 for study effects/corrections and 1e-8 for models.

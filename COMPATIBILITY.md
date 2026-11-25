@@ -2,7 +2,7 @@
 
 | Function or option | Status | Scope |
 |---|---|---|
-| `escalc(measure="RR")`, `to` correction options | partial | Log risk ratio and variance for 2×2 counts. `only0`, `all`, `if0all`, and `none` are checked against the pinned release on hand cases. Other measures and correction options are unsupported. |
+| `escalc(measure="RR")`, `to` correction options | partial | Log risk ratio plus log odds ratio (`OR`) and risk difference (`RD`) for 2×2 counts. The RR, OR, and RD formulas, sampling variances, BCG rows, and four `to` policies are checked against pinned R references or hand cases. Other measures and correction options remain unsupported; warning wording/categories differ for undefined values. |
 | `rma(..., method="FE")` | partial | Matrix design, inverse-variance fit, normal inference, checked against BCG. Small-sample tests and alternative intervals are unsupported. |
 | `rma(..., method="REML")` | partial | Matrix design, one heterogeneity component, complete-data BCG parity, a zero-heterogeneity boundary, a local-maximum safeguard, and single-study boundary. REML with zero sampling variances is unsupported. |
 | Missing and invalid rows | partial | Non-finite rows are omitted with a Python runtime warning and original row indices are retained. Warning text/categories do not reproduce R exactly; zero sampling variances are rejected explicitly. |

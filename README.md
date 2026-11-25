@@ -21,7 +21,7 @@ python examples/phylogeny.py
 
 The tutorial overview lists the focused `--case` commands. Running these scripts without a selector rebuilds each complete comparison result.
 
-The [three-language BCG comparison](https://itchyshin.github.io/metafor-py/_static/comparisons/bcg-comparison.html), [dependent-effects comparison](https://itchyshin.github.io/metafor-py/_static/comparisons/dependent-comparison.html), and [phylogenetic comparison](https://itchyshin.github.io/metafor-py/_static/comparisons/phylogeny-comparison.html) place R metafor 5.2-1, Python, and Julia results side by side. The plots and comparison pages are original. Fixture provenance and checksums live under [`reference/`](reference/).
+The [three-language BCG comparison](https://itchyshin.github.io/metafor-py/_static/comparisons/bcg-comparison.html), [dependent-effects comparison](https://itchyshin.github.io/metafor-py/_static/comparisons/dependent-comparison.html), and [phylogenetic comparison](https://itchyshin.github.io/metafor-py/_static/comparisons/phylogeny-comparison.html) and [effect-size comparison](https://itchyshin.github.io/metafor-py/_static/comparisons/effect-size-comparison.html) place R metafor 5.2-1, Python, and Julia results side by side. The plots and comparison pages are original. Fixture provenance and checksums live under [`reference/`](reference/).
 
 Build the documentation locally:
 

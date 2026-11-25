@@ -13,5 +13,5 @@ html_theme = "sphinx_rtd_theme"
 repo = Path(__file__).resolve().parent.parent
 comparison_dir = Path(__file__).resolve().parent / "_static" / "comparisons"
 comparison_dir.mkdir(parents=True, exist_ok=True)
-for name in ("bcg-comparison.html", "dependent-comparison.html", "phylogeny-comparison.html"):
+for name in ("bcg-comparison.html", "dependent-comparison.html", "phylogeny-comparison.html", "effect-size-comparison.html"):
     shutil.copy2(repo / "examples" / name, comparison_dir / name)

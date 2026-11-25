@@ -2,7 +2,7 @@
 
 Each tutorial asks a question, introduces the fixture and model, then interprets the results. Every runnable stage has a named selector. The same cases are implemented natively in Julia and Python; comparisons use the pinned R reference.
 
-Install the package first with `python -m pip install -e .`. The comparison artifacts are local files in `examples/` and have not been deployed.
+Install the package first with `python -m pip install -e .`. The comparison artifacts are included in the built site.
 
 | Page | Question | Runnable Python command | Comparison |
 |---|---|---|---|
@@ -19,6 +19,16 @@ Install the package first with `python -m pip install -e .`. The comparison arti
 
 Omit `--case` from the BCG or dependent command to regenerate the complete comparison outputs. The phylogenetic commands exercise separate zero-boundary and interior variance cases.
 
+| [Odds ratios](odds-ratio.md) | How do counts become a log odds ratio? | `python examples/effect-sizes.py --case=odds-ratio` | [R, Python, Julia](../_static/comparisons/effect-size-comparison.html) |
+| [Risk differences](risk-difference.md) | How do counts become an absolute probability contrast? | `python examples/effect-sizes.py --case=risk-difference` | [R, Python, Julia](../_static/comparisons/effect-size-comparison.html) |
+| [Choosing a scale](effect-scale.md) | Why do effect magnitudes differ by scale? | `python examples/effect-sizes.py --case=scale` | [R, Python, Julia](../_static/comparisons/effect-size-comparison.html) |
+| [Zero-cell policies](zero-cell-policies.md) | How do correction choices change results? | `python examples/effect-sizes.py --case=zero-correction` | [R, Python, Julia](../_static/comparisons/effect-size-comparison.html) |
+| [Missing observations](missing-rows.md) | Are incomplete studies kept aligned? | `python -m pytest tests/test_effect_sizes.py -k missing` | [R, Python, Julia](../_static/comparisons/effect-size-comparison.html) |
+| [Pooling log odds ratios](odds-ratio-models.md) | How do FE and REML summaries differ? | `python examples/effect-sizes.py --case=odds-ratio` | [R, Python, Julia](../_static/comparisons/effect-size-comparison.html) |
+| [Pooling risk differences](risk-difference-models.md) | How does heterogeneity look on an absolute scale? | `python examples/effect-sizes.py --case=risk-difference` | [R, Python, Julia](../_static/comparisons/effect-size-comparison.html) |
+| [Phylogenetic boundary](phylo-boundary.md) | What does a zero variance boundary mean? | `python examples/phylogeny.py --case=boundary` | [R, Python, Julia](../_static/comparisons/phylogeny-comparison.html) |
+| [Phylogenetic interior fit](phylo-interior.md) | What changes when phylogenetic variance is positive? | `python examples/phylogeny.py --case=interior` | [R, Python, Julia](../_static/comparisons/phylogeny-comparison.html) |
+| [Phylogenetic matrix labels](phylo-labels.md) | Why check species labels and order? | `python examples/phylogeny.py --case=interior` | [R, Python, Julia](../_static/comparisons/phylogeny-comparison.html) |
 ```{toctree}
 :maxdepth: 1
 
@@ -32,4 +42,14 @@ dependent-nested
 dependent-bivariate
 phylogeny
 differences
+odds-ratio
+risk-difference
+effect-scale
+zero-cell-policies
+missing-rows
+odds-ratio-models
+risk-difference-models
+phylo-boundary
+phylo-interior
+phylo-labels
 ```
