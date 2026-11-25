@@ -8,13 +8,14 @@ The BCG fixture and row labels are retained while effect sizes are computed. Non
 
 ## Run the example
 
-From the repository root, run:
+Install the test dependencies and run the focused check from the repository root:
 
 ```sh
-python -m pytest tests/test_effect_sizes.py -k missing
+python -m pip install -e ".[test]"
+python -m pytest tests/test_effect_sizes.py tests/test_bcg.py -k missing
 ```
 
-The equivalent Julia command is `julia --project test/runtests.jl effect-sizes` in [Metafor.jl](https://github.com/itchyshin/Metafor.jl). The shared three-language comparison is [effect-size parity](../_static/comparisons/effect-size-comparison.html); phylogenetic results are in the [phylogeny comparison](../_static/comparisons/phylogeny-comparison.html).
+For checked outputs, see the [R and Python comparison guide](../compare).
 
 ## Interpretation
 

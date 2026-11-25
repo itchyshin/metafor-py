@@ -9,7 +9,7 @@
   <title>Nested study and effect variation &mdash; metafor-py  documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
-      <link rel="stylesheet" type="text/css" href="../_static/metafor.css?v=9dfbdc1e" />
+      <link rel="stylesheet" type="text/css" href="../_static/metafor.css?v=23c7db53" />
 
   
       <script src="../_static/jquery.js?v=5d32c60e"></script>
@@ -43,34 +43,187 @@
   </form>
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="../bcg.html">Does BCG vaccination reduce tuberculosis risk?</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../dependent.html">How should we combine dependent effect estimates?</a></li>
-<li class="toctree-l1 current"><a class="reference internal" href="index.html">Tutorials and comparisons</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="bcg-effects.html">From counts to log risk ratios</a></li>
-<li class="toctree-l2"><a class="reference internal" href="bcg-models.html">Fixed-effect and random-effects estimates</a></li>
-<li class="toctree-l2"><a class="reference internal" href="bcg-moderator.html">Does latitude explain effect variation?</a></li>
-<li class="toctree-l2"><a class="reference internal" href="bcg-prediction.html">Mean confidence intervals and prediction intervals</a></li>
-<li class="toctree-l2"><a class="reference internal" href="bcg-forest.html">Building forest-plot data</a></li>
-<li class="toctree-l2"><a class="reference internal" href="dependent-gls.html">Correlated sampling errors</a></li>
+              <p class="caption" role="heading"><span class="caption-text">Start here</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../getting-started.html">Getting started</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../getting-started.html#install">Install</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../getting-started.html#run-the-bcg-example">Run the BCG example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../getting-started.html#inspect-predictions-and-the-forest-plot">Inspect predictions and the forest plot</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../getting-started.html#license-and-project-roles">License and project roles</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../compare.html">Compare R and Python</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../compare.html#pairwise-comparison-reports">Pairwise comparison reports</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../compare.html#how-to-read-the-results">How to read the results</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../news.html">News</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../news.html#current-status">Current status</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../citation.html">Citation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../citation.html#citing-this-python-port">Citing this Python port</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../citation.html#citing-the-upstream-r-package">Citing the upstream R package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../citation.html#license">License</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../reference/index.html">Reference</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../reference/index.html#choose-a-topic">Choose a topic</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../reference/index.html#common-inputs">Common inputs</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../reference/effect-sizes.html">Effect sizes from binary outcomes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../reference/univariate.html">Univariate models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../reference/prediction.html">Predictions and forest summaries</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../reference/dependent.html">Dependent effects and supplied covariance</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../reference/phylogeny.html">Supplied phylogenetic correlation</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Articles</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../bcg.html">Does BCG vaccination reduce tuberculosis risk?</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../bcg.html#data">Data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../bcg.html#models">Models</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../bcg.html#interpretation">Interpretation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../bcg.html#supplied-phylogenetic-correlation">Supplied phylogenetic correlation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../bcg.html#differences-from-r-metafor">Differences from R metafor</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../dependent.html">How should we combine dependent effect estimates?</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../dependent.html#data">Data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../dependent.html#model">Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../dependent.html#interpretation">Interpretation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../dependent.html#differences-from-r-metafor">Differences from R metafor</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Tutorials</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="bcg-effects.html">From counts to log risk ratios</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="bcg-effects.html#interpretation">Interpretation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bcg-effects.html#differences-from-r-metafor">Differences from R metafor</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="bcg-models.html">Fixed-effect and random-effects estimates</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="bcg-models.html#interpretation">Interpretation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bcg-models.html#differences-from-r-metafor">Differences from R metafor</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="bcg-moderator.html">Does latitude explain effect variation?</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="bcg-moderator.html#data-and-provenance">Data and provenance</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bcg-moderator.html#differences-from-r-metafor">Differences from R metafor</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="bcg-prediction.html">Mean confidence intervals and prediction intervals</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="bcg-prediction.html#interpretation">Interpretation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bcg-prediction.html#differences-from-r-metafor">Differences from R metafor</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="bcg-forest.html">Building forest-plot data</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="bcg-forest.html#provenance">Provenance</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bcg-forest.html#differences-from-r-metafor">Differences from R metafor</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="dependent-gls.html">Correlated sampling errors</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="dependent-gls.html#data-and-provenance">Data and provenance</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dependent-gls.html#differences-from-r-metafor">Differences from R metafor</a></li>
+</ul>
+</li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">Nested study and effect variation</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#interpretation">Interpretation</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#differences-from-r-metafor">Differences from R metafor</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="dependent-bivariate.html">Two correlated outcomes per study</a></li>
-<li class="toctree-l2"><a class="reference internal" href="phylogeny.html">Supplied phylogenetic correlation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dependent-bivariate.html">Two correlated outcomes per study</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="dependent-bivariate.html#data-and-provenance">Data and provenance</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dependent-bivariate.html#differences-from-r-metafor">Differences from R metafor</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="phylogeny.html">Supplied phylogenetic correlation</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="phylogeny.html#provenance">Provenance</a></li>
+<li class="toctree-l3"><a class="reference internal" href="phylogeny.html#differences-from-r-metafor">Differences from R metafor</a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="differences.html">Differences from R metafor</a></li>
-<li class="toctree-l2"><a class="reference internal" href="odds-ratio.html">Odds ratios from 2 × 2 counts</a></li>
-<li class="toctree-l2"><a class="reference internal" href="risk-difference.html">Risk differences from 2 × 2 counts</a></li>
-<li class="toctree-l2"><a class="reference internal" href="effect-scale.html">Choosing an effect scale</a></li>
-<li class="toctree-l2"><a class="reference internal" href="zero-cell-policies.html">Zero-cell correction policies</a></li>
-<li class="toctree-l2"><a class="reference internal" href="missing-rows.html">Missing observations and row identity</a></li>
-<li class="toctree-l2"><a class="reference internal" href="odds-ratio-models.html">Pooling log odds ratios</a></li>
-<li class="toctree-l2"><a class="reference internal" href="risk-difference-models.html">Pooling risk differences</a></li>
-<li class="toctree-l2"><a class="reference internal" href="phylo-boundary.html">Phylogenetic model at the zero boundary</a></li>
-<li class="toctree-l2"><a class="reference internal" href="phylo-interior.html">Phylogenetic model with an interior variance</a></li>
-<li class="toctree-l2"><a class="reference internal" href="phylo-labels.html">Aligning a phylogenetic matrix by species</a></li>
+<li class="toctree-l2"><a class="reference internal" href="odds-ratio.html">Odds ratios from 2 × 2 counts</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="odds-ratio.html#data-and-model">Data and model</a></li>
+<li class="toctree-l3"><a class="reference internal" href="odds-ratio.html#run-the-example">Run the example</a></li>
+<li class="toctree-l3"><a class="reference internal" href="odds-ratio.html#interpretation">Interpretation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="odds-ratio.html#scope">Scope</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="risk-difference.html">Risk differences from 2 × 2 counts</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="risk-difference.html#data-and-model">Data and model</a></li>
+<li class="toctree-l3"><a class="reference internal" href="risk-difference.html#run-the-example">Run the example</a></li>
+<li class="toctree-l3"><a class="reference internal" href="risk-difference.html#interpretation">Interpretation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="risk-difference.html#scope">Scope</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="effect-scale.html">Choosing an effect scale</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="effect-scale.html#data-and-model">Data and model</a></li>
+<li class="toctree-l3"><a class="reference internal" href="effect-scale.html#run-the-example">Run the example</a></li>
+<li class="toctree-l3"><a class="reference internal" href="effect-scale.html#interpretation">Interpretation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="effect-scale.html#scope">Scope</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="zero-cell-policies.html">Zero-cell correction policies</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="zero-cell-policies.html#data-and-model">Data and model</a></li>
+<li class="toctree-l3"><a class="reference internal" href="zero-cell-policies.html#run-the-example">Run the example</a></li>
+<li class="toctree-l3"><a class="reference internal" href="zero-cell-policies.html#interpretation">Interpretation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="zero-cell-policies.html#scope">Scope</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="missing-rows.html">Missing observations and row identity</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="missing-rows.html#data-and-model">Data and model</a></li>
+<li class="toctree-l3"><a class="reference internal" href="missing-rows.html#run-the-example">Run the example</a></li>
+<li class="toctree-l3"><a class="reference internal" href="missing-rows.html#interpretation">Interpretation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="missing-rows.html#scope">Scope</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="table-adapter.html">Turning a formula into a checked design matrix</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="table-adapter.html#data-and-model">Data and model</a></li>
+<li class="toctree-l3"><a class="reference internal" href="table-adapter.html#run-the-example">Run the example</a></li>
+<li class="toctree-l3"><a class="reference internal" href="table-adapter.html#interpretation">Interpretation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="table-adapter.html#scope">Scope</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="odds-ratio-models.html">Pooling log odds ratios</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="odds-ratio-models.html#data-and-model">Data and model</a></li>
+<li class="toctree-l3"><a class="reference internal" href="odds-ratio-models.html#run-the-example">Run the example</a></li>
+<li class="toctree-l3"><a class="reference internal" href="odds-ratio-models.html#interpretation">Interpretation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="odds-ratio-models.html#scope">Scope</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="risk-difference-models.html">Pooling risk differences</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="risk-difference-models.html#data-and-model">Data and model</a></li>
+<li class="toctree-l3"><a class="reference internal" href="risk-difference-models.html#run-the-example">Run the example</a></li>
+<li class="toctree-l3"><a class="reference internal" href="risk-difference-models.html#interpretation">Interpretation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="risk-difference-models.html#scope">Scope</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="phylo-boundary.html">Phylogenetic model at the zero boundary</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="phylo-boundary.html#data-and-model">Data and model</a></li>
+<li class="toctree-l3"><a class="reference internal" href="phylo-boundary.html#run-the-example">Run the example</a></li>
+<li class="toctree-l3"><a class="reference internal" href="phylo-boundary.html#interpretation">Interpretation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="phylo-boundary.html#scope">Scope</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="phylo-interior.html">Phylogenetic model with an interior variance</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="phylo-interior.html#data-and-model">Data and model</a></li>
+<li class="toctree-l3"><a class="reference internal" href="phylo-interior.html#run-the-example">Run the example</a></li>
+<li class="toctree-l3"><a class="reference internal" href="phylo-interior.html#interpretation">Interpretation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="phylo-interior.html#scope">Scope</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="phylo-labels.html">Aligning a phylogenetic matrix by species</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="phylo-labels.html#data-and-model">Data and model</a></li>
+<li class="toctree-l3"><a class="reference internal" href="phylo-labels.html#run-the-example">Run the example</a></li>
+<li class="toctree-l3"><a class="reference internal" href="phylo-labels.html#interpretation">Interpretation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="phylo-labels.html#scope">Scope</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -89,7 +242,7 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
-          <li class="breadcrumb-item"><a href="index.html">Tutorials and comparisons</a></li>
+          <li class="breadcrumb-item"><a href="index.html">Tutorials</a></li>
       <li class="breadcrumb-item active">Nested study and effect variation</li>
       <li class="wy-breadcrumbs-aside">
             <a href="../_sources/examples/dependent-nested.md.txt" rel="nofollow"> View page source</a>
@@ -100,7 +253,7 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="nested-study-and-effect-variation">
+  <section class="tex2jax_ignore mathjax_ignore" id="nested-study-and-effect-variation">
 <h1>Nested study and effect variation<a class="headerlink" href="#nested-study-and-effect-variation" title="Link to this heading"></a></h1>
 <p>Question: How can the model represent variation among studies and among effects within each study?</p>
 <p>The synthetic fixture has repeated local effect labels across studies. The nested key therefore includes both the parent study and local effect identity. This preserves row and group alignment when constructing covariance kernels.</p>
@@ -108,7 +261,7 @@
 <div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>examples/dependent.py<span class="w"> </span>--case<span class="o">=</span>nested
 </pre></div>
 </div>
-<p>The script fits a REML model with study and nested-effect variance components. Its estimates and coefficient covariance appear in the <a href="../_static/comparisons/dependent-comparison.html">three-language comparison</a>.</p>
+<p>The script fits a REML model with study and nested-effect variance components. Its estimates and coefficient covariance appear in the <a class="reference internal" href="../compare.html"><span class="doc std std-doc">R and Python comparison guide</span></a>.</p>
 <section id="interpretation">
 <h2>Interpretation<a class="headerlink" href="#interpretation" title="Link to this heading"></a></h2>
 <p>Each nonnegative variance component describes a level of the supplied grouping structure. The fixture is synthetic and does not estimate a biological or clinical effect.</p>
@@ -130,12 +283,9 @@
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright .</p>
+    <p></p>
   </div>
 
-  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
-    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
-    provided by <a href="https://readthedocs.org">Read the Docs</a>.
    
 
 </footer>

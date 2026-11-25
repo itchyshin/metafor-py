@@ -14,13 +14,13 @@ From the repository root, run:
 python examples/bcg.py --case=table-adapter
 ```
 
-The command needs the `tables` extra (`pandas` and `patsy`). The paired Julia command is `julia --project=. examples/bcg.jl --case=table-adapter` in [Metafor.jl](https://github.com/itchyshin/Metafor.jl).
+The command needs the `tables` extra (`pandas` and `patsy`). See the [R and Python comparison guide](../compare) for the direct reference checks.
 
 The example prints the retained trial IDs and formula coefficients. It also fits the same rows with an explicit matrix and reports the largest coefficient difference.
 
 ## Interpretation
 
-The formula fit omits trial 4 and retains the other 12 trial IDs in their input order. Its estimates match the matrix fit to within `1e-12`. Patsy and StatsModels label the intercept differently, while the numeric design and coefficient order agree.
+The formula fit omits trial 4 and retains the other 12 trial IDs in their input order. Its estimates match the matrix fit to within `1e-12`. The report checks the retained IDs, all 24 numeric design values, and both coefficients against pinned R results. Patsy and StatsModels label the intercept differently, while the numeric design and coefficient order agree.
 
 ## Scope
 

@@ -28,7 +28,7 @@ The next runnable example uses five synthetic observations on three species and 
 :language: python
 ```
 
-Run `OPENBLAS_NUM_THREADS=1 .venv/bin/python tools/compare-phylogeny.py` to fit R, Python and Julia from the shared fixtures and write `examples/phylogeny-comparison.html`. Tree estimation and prediction for unseen species are not part of this first example. The correlation matrix and observation order are supplied explicitly. In the built site, open the <a href="_static/comparisons/phylogeny-comparison.html">phylogeny comparison</a>.
+The paired report checks the supplied-correlation fits against the pinned R reference. Tree estimation and prediction for unseen species are not part of this example. The correlation matrix and observation order are supplied explicitly; see the [R and Python comparison guide](compare) for checked quantities and tolerances.
 
 ## Differences from R metafor
 

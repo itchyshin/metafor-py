@@ -28,3 +28,11 @@ R_LIBS=/path/to/pinned-R-library Rscript reference/dependent/v1/generate.R
 
 `REFERENCE-VERSIONS.txt` records the runtime versions and generator seeds. Input
 and output file checksums are recorded in `SHA256SUMS`.
+
+## Regeneration
+
+Set `METAFOR_SOURCE_ARCHIVE` to the [CRAN 5.2-1 source archive](https://cran.r-project.org/src/contrib/metafor_5.2-1.tar.gz).
+The generator checks SHA-256 `25c421cf52279294b11ab3166adfeb327dd22034a03a46487f081a19a163339b`
+and the installed metafor version. Run `Rscript generate.R` from this fixture
+directory with the pinned R library active. The repository's `reference/v1/PROVENANCE.md` lists the reference runtime
+and dependency versions.

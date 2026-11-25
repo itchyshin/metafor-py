@@ -10,7 +10,7 @@ Run the native example from the repository root:
 python examples/dependent.py --case=gls
 ```
 
-The output includes coefficients, standard errors, intervals, heterogeneity statistics, and coefficient covariance. The <a href="../_static/comparisons/dependent-comparison.html">comparison page</a> compares these quantities with pinned R results and Julia output.
+The output includes coefficients, standard errors, intervals, heterogeneity statistics, and coefficient covariance. The [R and Python comparison guide](../compare) compares these quantities with pinned R results and Python output.
 
 ## Data and provenance
 

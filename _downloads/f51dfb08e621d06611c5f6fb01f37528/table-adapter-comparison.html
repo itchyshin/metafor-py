@@ -1,17 +1,16 @@
 <!doctype html>
-<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width">
-<title>BCG formula adapter parity</title>
-<style>body{font:16px/1.55 system-ui,sans-serif;max-width:900px;margin:3rem auto;padding:0 1rem;color:#18304a}table{border-collapse:collapse}th,td{padding:.55rem 1rem;border:1px solid #ccd5df;text-align:left}.ok{color:#14723a;font-weight:700}</style>
-<h1>Formula adapters preserve the BCG design</h1>
-<p>The Python/Patsy and Julia/StatsModels adapters fit the same BCG log risk ratios with latitude as a moderator. Trial 4 has a missing latitude in this example.</p>
-<p class="ok">PASS: both adapters retain the same 12 trials, produce the same 12 × 2 numeric design, and match their matrix fits within 1e-12.</p>
-<table><thead><tr><th>Check</th><th>Python</th><th>Julia</th></tr></thead><tbody>
-<tr><th>Retained trial IDs</th><td>1,2,3,5,6,7,8,9,10,11,12,13</td><td>1,2,3,5,6,7,8,9,10,11,12,13</td></tr>
-<tr><th>Design shape</th><td>12,2</td><td>12,2</td></tr>
-<tr><th>Design columns</th><td>Intercept,ablat</td><td>(Intercept),ablat</td></tr>
-<tr><th>Formula estimates</th><td>0.1825060943823962,-0.02602180731995789</td><td>0.1825060943823973,-0.02602180731995792</td></tr>
-<tr><th>Largest cross-language coefficient difference</th><td colspan="2">1.08e-15 (allowed: 1e-8 absolute or relative)</td></tr>
-</tbody></table>
-<p>The intercept column label follows each language's formula package. The numeric design and estimate ordering are compared directly. This fixture does not establish complete R formula compatibility.</p>
-<p><a href="https://itchyshin.github.io/metafor-py/">Python tutorials</a> · <a href="https://itchyshin.github.io/Metafor.jl/">Julia tutorials</a></p>
-</html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width">
+<title>BCG formula adapter: R vs Python</title><style>
+body{margin:2rem auto;padding:0 1rem;max-width:68rem;font:1rem/1.5 system-ui;color:#172c39}
+.table-wrap{overflow:auto}table{border-collapse:collapse;width:100%;font-variant-numeric:tabular-nums}
+th,td{text-align:left;border-bottom:1px solid #cad6dc;padding:.45rem .65rem}
+th{background:#e9f1f4}caption{text-align:left;padding:.5rem 0;font-weight:600}
+</style></head><body><main>
+<h1>BCG formula adapter: R vs Python</h1>
+<p>All 26 numerical checks passed against the pinned R metafor 5.2-1 reference.</p>
+<p>Trial 4 has a missing latitude. The twelve retained trial IDs must match R in order. A separate native formula-to-matrix check found a maximum coefficient difference of 0, with an allowed difference of 1e-12. See reference/table-adapter/v1/PROVENANCE.md. <a href="https://github.com/itchyshin/metafor-py/blob/main/reference/table-adapter/v1/PROVENANCE.md">Read the fixture provenance.</a></p>
+<div class="table-wrap"><table>
+<caption>Checked values and allowed absolute differences</caption>
+<thead><tr><th scope="col">Quantity</th><th scope="col">R</th><th scope="col">Python</th><th scope="col">Allowed difference</th></tr></thead>
+<tbody><tr><td>Trial 1 intercept</td><td>1</td><td>1</td><td>1e-12</td></tr><tr><td>Trial 1 ablat</td><td>44</td><td>44</td><td>1e-12</td></tr><tr><td>Trial 2 intercept</td><td>1</td><td>1</td><td>1e-12</td></tr><tr><td>Trial 2 ablat</td><td>55</td><td>55</td><td>1e-12</td></tr><tr><td>Trial 3 intercept</td><td>1</td><td>1</td><td>1e-12</td></tr><tr><td>Trial 3 ablat</td><td>42</td><td>42</td><td>1e-12</td></tr><tr><td>Trial 5 intercept</td><td>1</td><td>1</td><td>1e-12</td></tr><tr><td>Trial 5 ablat</td><td>13</td><td>13</td><td>1e-12</td></tr><tr><td>Trial 6 intercept</td><td>1</td><td>1</td><td>1e-12</td></tr><tr><td>Trial 6 ablat</td><td>44</td><td>44</td><td>1e-12</td></tr><tr><td>Trial 7 intercept</td><td>1</td><td>1</td><td>1e-12</td></tr><tr><td>Trial 7 ablat</td><td>19</td><td>19</td><td>1e-12</td></tr><tr><td>Trial 8 intercept</td><td>1</td><td>1</td><td>1e-12</td></tr><tr><td>Trial 8 ablat</td><td>13</td><td>13</td><td>1e-12</td></tr><tr><td>Trial 9 intercept</td><td>1</td><td>1</td><td>1e-12</td></tr><tr><td>Trial 9 ablat</td><td>27</td><td>27</td><td>1e-12</td></tr><tr><td>Trial 10 intercept</td><td>1</td><td>1</td><td>1e-12</td></tr><tr><td>Trial 10 ablat</td><td>42</td><td>42</td><td>1e-12</td></tr><tr><td>Trial 11 intercept</td><td>1</td><td>1</td><td>1e-12</td></tr><tr><td>Trial 11 ablat</td><td>18</td><td>18</td><td>1e-12</td></tr><tr><td>Trial 12 intercept</td><td>1</td><td>1</td><td>1e-12</td></tr><tr><td>Trial 12 ablat</td><td>33</td><td>33</td><td>1e-12</td></tr><tr><td>Trial 13 intercept</td><td>1</td><td>1</td><td>1e-12</td></tr><tr><td>Trial 13 ablat</td><td>33</td><td>33</td><td>1e-12</td></tr><tr><td>intrcpt</td><td>0.182506094382</td><td>0.182506094382</td><td>1e-08</td></tr><tr><td>ablat</td><td>-0.02602180732</td><td>-0.02602180732</td><td>1e-08</td></tr></tbody></table></div>
+</main></body></html>

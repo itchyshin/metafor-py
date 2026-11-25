@@ -10,7 +10,7 @@ Run the native example from the repository root:
 python examples/dependent.py --case=bivariate
 ```
 
-The generated comparison reports both outcome means, the variance components, their covariance and correlation, and coefficient covariance. See the <a href="../_static/comparisons/dependent-comparison.html">local comparison page</a>.
+The generated comparison reports both outcome means, the variance components, their covariance and correlation, and coefficient covariance. See the [R and Python comparison guide](../compare).
 
 ## Data and provenance
 
