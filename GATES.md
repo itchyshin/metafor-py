@@ -19,7 +19,7 @@ Scope: verify the native Python port, its Julia/R parity examples, references, a
   EXPECT: BCG_THREE_LANGUAGE_HTML_VERIFIED
   EVIDENCE: exit=0; shell=/bin/sh; cwd=/Users/z3437171/Dropbox/Github Local/metafor-py; path=b12a711c1484/40 entries; output=COMPARATOR_FAILURE_CONTROLS_OK coefficient forest covariance-label permutation | MAX_ABS_ERRORS {"H2": 1.7763568394002505e-14, "I2": 5.684341886080802e-14, "QE": 1.4210854715202004e-13, "beta": 1.3877787807814457e-15, "ci_lb": 1.94289029309
 
-- [x] G4: supplied phylogeny comparison verifies R, Python, and Julia
+- [x] G4: supplied phylogeny table, correlation heatmap, and interval plot compare R, Python, and Julia
   CHECK: OPENBLAS_NUM_THREADS=1 JULIA_NUM_THREADS=1 ./.unlazy/clean-python/bin/python tools/compare-phylogeny.py
   EXPECT: PHYLOGENY_THREE_LANGUAGE_HTML_VERIFIED
   EVIDENCE: exit=0; shell=/bin/sh; cwd=/Users/z3437171/Dropbox/Github Local/metafor-py; path=b12a711c1484/40 entries; output=PHYLOGENY_THREE_LANGUAGE_HTML_VERIFIED /Users/z3437171/Dropbox/Github Local/metafor-py/examples/phylogeny-comparison.html | MAX_ABS_ERRORS {'v1.beta': {'Python': 4.601874437071274e-14, 'Julia': 4.601874437071274e-14}, 'v1.se': {'Python': 1.
