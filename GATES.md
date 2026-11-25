@@ -50,6 +50,6 @@ Scope: verify the native Python port, its Julia/R parity examples, references, a
   EVIDENCE: exit=0; warning-as-error Sphinx build succeeded; twenty topic pages and four comparison HTML files verified.
 
 - [x] G9: pinned R effect sizes and pooled models match both native implementations
-  CHECK: OPENBLAS_NUM_THREADS=1 ./.unlazy/clean-python/bin/python tools/compare_effect_sizes.py
-  EXPECT: EFFECT_SIZE_PARITY_OK checks=232
-  EVIDENCE: exit=0; max absolute differences effect=3.9968028886505635e-15, model=5.4569682106375694e-12, correction=4.884981308350689e-15; tolerances 1e-12 for study effects/corrections and 1e-8 for models.
+  CHECK: run both native `examples/effect-sizes.* --case=all|scale|zero-correction` commands, then `python tools/compare_effect_sizes.py`
+  EXPECT: EFFECT_SIZE_PARITY_OK checks=316
+  EVIDENCE: exit=0; max absolute differences effect=3.9968028886505635e-15, model=5.4569682106375694e-12, correction=4.884981308350689e-15; tolerances 1e-12 for study effects/corrections and 1e-8 for models; includes all three BCG measures.
