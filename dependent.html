@@ -1,0 +1,167 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>How should we combine dependent effect estimates? &mdash; metafor-py  documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="_static/metafor.css?v=9dfbdc1e" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Tutorials and comparisons" href="examples/index.html" />
+    <link rel="prev" title="Does BCG vaccination reduce tuberculosis risk?" href="bcg.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            metafor-py
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="bcg.html">Does BCG vaccination reduce tuberculosis risk?</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">How should we combine dependent effect estimates?</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#data">Data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#model">Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#interpretation">Interpretation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#differences-from-r-metafor">Differences from R metafor</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="examples/index.html">Tutorials and comparisons</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">metafor-py</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">How should we combine dependent effect estimates?</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/dependent.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="how-should-we-combine-dependent-effect-estimates">
+<h1>How should we combine dependent effect estimates?<a class="headerlink" href="#how-should-we-combine-dependent-effect-estimates" title="Link to this heading"></a></h1>
+<p>Several estimates from one study can share sampling error, and outcomes from the same study can also share a study-level effect. Treating every row as independent can understate uncertainty. This tutorial asks how to fit those data when the sampling covariance is supplied.</p>
+<p>The example uses original synthetic fixtures, not the Berkey dataset. The rows and covariance matrices are shared with Metafor.jl and were generated with the pinned R reference script. Their versions, seeds, checksum, and terms are recorded in the source file <code class="docutils literal notranslate"><span class="pre">reference/dependent/v1/PROVENANCE.md</span></code>; the upstream <a class="reference external" href="https://wviechtb.github.io/metafor/reference/rma.mv.html"><code class="docutils literal notranslate"><span class="pre">rma.mv()</span></code> reference</a> describes the corresponding R model family.</p>
+<section id="data">
+<h2>Data<a class="headerlink" href="#data" title="Link to this heading"></a></h2>
+<p>The fixture set contains three cases:</p>
+<ol class="arabic simple">
+<li><p>Eight estimates with a correlated sampling covariance matrix and an intercept plus moderator.</p></li>
+<li><p>Thirty-six estimates nested in 12 studies and 36 study-specific effects. Local effect labels repeat across studies, so the nested key is <code class="docutils literal notranslate"><span class="pre">(study,</span> <span class="pre">effect)</span></code>.</p></li>
+<li><p>Two outcomes from each of 20 studies, with both correlated sampling errors and an unstructured study-level outcome covariance.</p></li>
+</ol>
+<p>The first two fixtures store observations and matrices as CSV. The third is a synthetic, Berkey-style example. All three fixtures, reference outputs, R versions, seeds, and SHA-256 checksums are in the source directory <code class="docutils literal notranslate"><span class="pre">reference/dependent/v1/</span></code>.</p>
+</section>
+<section id="model">
+<h2>Model<a class="headerlink" href="#model" title="Link to this heading"></a></h2>
+<p>For retained rows, let <code class="docutils literal notranslate"><span class="pre">V</span></code> be the supplied sampling covariance, <code class="docutils literal notranslate"><span class="pre">X</span></code> the fixed-effect design, and <code class="docutils literal notranslate"><span class="pre">K_j</span></code> a known positive-semidefinite random-effect kernel. The marginal covariance and fitted coefficients are</p>
+<p>[
+C=V+\sum_j \theta_j K_j,\qquad
+\hat\beta=(X^T C^{-1}X)^{-1}X^T C^{-1}y,
+]</p>
+<p>with each variance component <code class="docutils literal notranslate"><span class="pre">theta_j</span></code> constrained to be nonnegative. The nested example uses <code class="docutils literal notranslate"><span class="pre">K_study</span> <span class="pre">=</span> <span class="pre">Z_study</span> <span class="pre">Z_study'</span></code> and <code class="docutils literal notranslate"><span class="pre">K_effect</span> <span class="pre">=</span> <span class="pre">Z_effect</span> <span class="pre">Z_effect'</span></code>. The bivariate example estimates a positive-semidefinite 2 × 2 covariance matrix for the two outcomes within each study.</p>
+<p>The matrix-first API keeps sampling and random-effect covariance separate. Missing outcomes or design/group labels use one common row mask, and the matching rows and columns are removed from <code class="docutils literal notranslate"><span class="pre">V</span></code>.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">metafor</span><span class="w"> </span><span class="kn">import</span> <span class="n">fit_meta_cov</span><span class="p">,</span> <span class="n">fit_meta_nested</span><span class="p">,</span> <span class="n">fit_meta_un</span>
+
+<span class="c1"># Full sampling covariance, fixed effects, and a supplied design matrix.</span>
+<span class="n">fit</span> <span class="o">=</span> <span class="n">fit_meta_cov</span><span class="p">(</span><span class="n">yi</span><span class="p">,</span> <span class="n">V</span><span class="p">,</span> <span class="n">X</span><span class="o">=</span><span class="n">X</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s2">"FE"</span><span class="p">)</span>
+
+<span class="c1"># Independent random intercepts, ordered from outer to inner.</span>
+<span class="n">groups</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">"study"</span><span class="p">:</span> <span class="n">study</span><span class="p">,</span>
+    <span class="s2">"study/effect"</span><span class="p">:</span> <span class="nb">list</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">study</span><span class="p">,</span> <span class="n">effect_local</span><span class="p">)),</span>
+<span class="p">}</span>
+<span class="n">fit</span> <span class="o">=</span> <span class="n">fit_meta_nested</span><span class="p">(</span><span class="n">yi</span><span class="p">,</span> <span class="n">V</span><span class="p">,</span> <span class="n">groups</span><span class="o">=</span><span class="n">groups</span><span class="p">,</span> <span class="n">X</span><span class="o">=</span><span class="n">X</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s2">"REML"</span><span class="p">)</span>
+
+<span class="c1"># Two outcomes with an unstructured covariance within study.</span>
+<span class="n">fit</span> <span class="o">=</span> <span class="n">fit_meta_un</span><span class="p">(</span><span class="n">yi</span><span class="p">,</span> <span class="n">V</span><span class="p">,</span> <span class="n">study</span><span class="p">,</span> <span class="n">outcome</span><span class="p">,</span>
+                  <span class="n">outcome_levels</span><span class="o">=</span><span class="p">(</span><span class="s2">"benefit"</span><span class="p">,</span> <span class="s2">"harm"</span><span class="p">),</span> <span class="n">method</span><span class="o">=</span><span class="s2">"REML"</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Install the project and optional table support with <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">-e</span> <span class="pre">'.[tables]'</span></code> before running the example. For a pandas table, <code class="docutils literal notranslate"><span class="pre">fit_meta_cov_formula(data,</span> <span class="pre">&quot;yi</span> <span class="pre">~</span> <span class="pre">x&quot;,</span> <span class="pre">V,</span> <span class="pre">id=&quot;row_id&quot;)</span></code> builds the design matrix with Patsy and preserves input row identity. This is a numeric-formula adapter; full R formula semantics are not claimed.</p>
+</section>
+<section id="interpretation">
+<h2>Interpretation<a class="headerlink" href="#interpretation" title="Link to this heading"></a></h2>
+<p>The shared synthetic R reference estimates the nested intercept at 0.6034 and its moderator slope at 0.2770. It estimates study and nested-effect variances of 0.1133 and 0.0221. In the two-outcome case, the estimated benefit and harm means are 0.4856 and 0.2422; the estimated between-outcome covariance is 0.2316. These numbers describe only the generated fixtures.</p>
+<p>The local comparison page places R, Python, and Julia estimates and coefficient covariance entries side by side. Run <code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">tools/compare-dependent.py</span></code> from the Python checkout, with Julia installed and the Julia checkout at <code class="docutils literal notranslate"><span class="pre">../Metafor.jl</span></code>; the command writes <code class="docutils literal notranslate"><span class="pre">examples/dependent-comparison.html</span></code>. The current gate compares 42 estimates and 12 coefficient-covariance entries against R, with quantity-specific tolerances. In the built site, open the <a href="_static/comparisons/dependent-comparison.html">dependent-effects comparison</a>.</p>
+</section>
+<section id="differences-from-r-metafor">
+<h2>Differences from R metafor<a class="headerlink" href="#differences-from-r-metafor" title="Link to this heading"></a></h2>
+<p>The ports cover supplied positive-definite sampling covariance matrices, normal-normal GLS/REML, independent scalar PSD kernels, nested random intercepts, and a two-outcome unstructured study covariance. The tested fixtures match coefficients, standard errors, intervals, heterogeneity statistics, variance/covariance components, and coefficient covariance within the recorded tolerances.</p>
+<p>This is partial <code class="docutils literal notranslate"><span class="pre">rma.mv()</span></code> coverage. The current implementation does not claim support for AR/CAR, spatial, GEN, phylogenetic tree estimation, estimated sampling correlations, three or more outcomes in the unstructured model, small-sample inference, profile intervals, or the full diagnostic suite. Error text and warning categories can differ from R. The repository root file <code class="docutils literal notranslate"><span class="pre">COMPATIBILITY.md</span></code> records status by function and option.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="bcg.html" class="btn btn-neutral float-left" title="Does BCG vaccination reduce tuberculosis risk?" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="examples/index.html" class="btn btn-neutral float-right" title="Tutorials and comparisons" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright .</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

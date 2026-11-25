@@ -1,0 +1,309 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Does BCG vaccination reduce tuberculosis risk? &mdash; metafor-py  documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="_static/metafor.css?v=9dfbdc1e" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="How should we combine dependent effect estimates?" href="dependent.html" />
+    <link rel="prev" title="metafor-py: selected native Python methods for meta-analysis" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            metafor-py
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Does BCG vaccination reduce tuberculosis risk?</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#data">Data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#models">Models</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#interpretation">Interpretation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#supplied-phylogenetic-correlation">Supplied phylogenetic correlation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#differences-from-r-metafor">Differences from R metafor</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="dependent.html">How should we combine dependent effect estimates?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples/index.html">Tutorials and comparisons</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">metafor-py</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Does BCG vaccination reduce tuberculosis risk?</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/bcg.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="does-bcg-vaccination-reduce-tuberculosis-risk">
+<h1>Does BCG vaccination reduce tuberculosis risk?<a class="headerlink" href="#does-bcg-vaccination-reduce-tuberculosis-risk" title="Link to this heading"></a></h1>
+<p>The BCG example asks whether vaccination lowers tuberculosis incidence across 13 studies, and whether the effect changes with absolute latitude. The published example provides the study counts and describes the motivating question. This page uses the shared data fixture and original prose. <a class="reference external" href="https://wviechtb.github.io/metadat/reference/dat.bcg.html">Dataset and upstream example</a></p>
+<section id="data">
+<h2>Data<a class="headerlink" href="#data" title="Link to this heading"></a></h2>
+<p>Each study reports tuberculosis cases and non-cases in vaccinated and control groups. We calculate the log risk ratio from those counts. Negative values indicate a lower risk among vaccinated participants.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="sd">"""Run a focused stage or the complete 13-study BCG example."""</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">argparse</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">csv</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">json</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">metafor</span><span class="w"> </span><span class="kn">import</span> <span class="n">escalc_rr</span><span class="p">,</span> <span class="n">fit_meta</span><span class="p">,</span> <span class="n">forest_plot_data</span><span class="p">,</span> <span class="n">write_forest_svg</span>
+
+<span class="n">ROOT</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)</span><span class="o">.</span><span class="n">parents</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">():</span>
+    <span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="vm">__doc__</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">"--case"</span><span class="p">,</span>
+        <span class="n">choices</span><span class="o">=</span><span class="p">(</span><span class="s2">"all"</span><span class="p">,</span> <span class="s2">"effects"</span><span class="p">,</span> <span class="s2">"models"</span><span class="p">,</span> <span class="s2">"moderator"</span><span class="p">,</span> <span class="s2">"prediction"</span><span class="p">,</span> <span class="s2">"forest"</span><span class="p">),</span>
+        <span class="n">default</span><span class="o">=</span><span class="s2">"all"</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">case</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">()</span><span class="o">.</span><span class="n">case</span>
+
+    <span class="k">with</span> <span class="p">(</span><span class="n">ROOT</span> <span class="o">/</span> <span class="s2">"reference/v1/bcg.csv"</span><span class="p">)</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">newline</span><span class="o">=</span><span class="s2">""</span><span class="p">)</span> <span class="k">as</span> <span class="n">handle</span><span class="p">:</span>
+        <span class="n">rows</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">csv</span><span class="o">.</span><span class="n">DictReader</span><span class="p">(</span><span class="n">handle</span><span class="p">))</span>
+    <span class="n">count</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">name</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="nb">float</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="n">name</span><span class="p">])</span> <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">rows</span><span class="p">])</span>
+    <span class="n">yi</span><span class="p">,</span> <span class="n">vi</span> <span class="o">=</span> <span class="n">escalc_rr</span><span class="p">(</span><span class="n">count</span><span class="p">(</span><span class="s2">"tpos"</span><span class="p">),</span> <span class="n">count</span><span class="p">(</span><span class="s2">"tneg"</span><span class="p">),</span> <span class="n">count</span><span class="p">(</span><span class="s2">"cpos"</span><span class="p">),</span> <span class="n">count</span><span class="p">(</span><span class="s2">"cneg"</span><span class="p">))</span>
+    <span class="n">latitude</span> <span class="o">=</span> <span class="n">count</span><span class="p">(</span><span class="s2">"ablat"</span><span class="p">)</span>
+    <span class="n">designs</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">"fixed"</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">yi</span><span class="p">),</span> <span class="mi">1</span><span class="p">)),</span>
+        <span class="s2">"random"</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">yi</span><span class="p">),</span> <span class="mi">1</span><span class="p">)),</span>
+        <span class="s2">"latitude"</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">column_stack</span><span class="p">([</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">yi</span><span class="p">)),</span> <span class="n">latitude</span><span class="p">]),</span>
+    <span class="p">}</span>
+    <span class="n">requested</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">"all"</span><span class="p">:</span> <span class="p">(</span><span class="s2">"fixed"</span><span class="p">,</span> <span class="s2">"random"</span><span class="p">,</span> <span class="s2">"latitude"</span><span class="p">),</span>
+        <span class="s2">"effects"</span><span class="p">:</span> <span class="p">(),</span>
+        <span class="s2">"models"</span><span class="p">:</span> <span class="p">(</span><span class="s2">"fixed"</span><span class="p">,</span> <span class="s2">"random"</span><span class="p">),</span>
+        <span class="s2">"moderator"</span><span class="p">:</span> <span class="p">(</span><span class="s2">"latitude"</span><span class="p">,),</span>
+        <span class="s2">"prediction"</span><span class="p">:</span> <span class="p">(</span><span class="s2">"latitude"</span><span class="p">,),</span>
+        <span class="s2">"forest"</span><span class="p">:</span> <span class="p">(</span><span class="s2">"random"</span><span class="p">,),</span>
+    <span class="p">}[</span><span class="n">case</span><span class="p">]</span>
+    <span class="n">models</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="n">name</span><span class="p">:</span> <span class="n">fit_meta</span><span class="p">(</span><span class="n">yi</span><span class="p">,</span> <span class="n">vi</span><span class="p">,</span> <span class="n">designs</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="k">if</span> <span class="n">name</span> <span class="o">==</span> <span class="s2">"latitude"</span> <span class="k">else</span> <span class="kc">None</span><span class="p">,</span>
+                       <span class="n">method</span><span class="o">=</span><span class="s2">"FE"</span> <span class="k">if</span> <span class="n">name</span> <span class="o">==</span> <span class="s2">"fixed"</span> <span class="k">else</span> <span class="s2">"REML"</span> <span class="k">if</span> <span class="n">name</span> <span class="o">==</span> <span class="s2">"random"</span> <span class="k">else</span> <span class="s2">"REML"</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">requested</span>
+    <span class="p">}</span>
+    <span class="n">predictions</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="k">if</span> <span class="n">case</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">"all"</span><span class="p">,</span> <span class="s2">"moderator"</span><span class="p">,</span> <span class="s2">"prediction"</span><span class="p">):</span>
+        <span class="n">predictions</span> <span class="o">=</span> <span class="n">models</span><span class="p">[</span><span class="s2">"latitude"</span><span class="p">]</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span>
+            <span class="n">np</span><span class="o">.</span><span class="n">column_stack</span><span class="p">([</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="mi">3</span><span class="p">),</span> <span class="p">[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">30.0</span><span class="p">,</span> <span class="mf">60.0</span><span class="p">]])</span>
+        <span class="p">)</span>
+    <span class="n">forest</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="k">if</span> <span class="n">case</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">"all"</span><span class="p">,</span> <span class="s2">"forest"</span><span class="p">):</span>
+        <span class="n">forest</span> <span class="o">=</span> <span class="n">forest_plot_data</span><span class="p">(</span><span class="n">yi</span><span class="p">,</span> <span class="n">vi</span><span class="p">,</span> <span class="p">[</span><span class="n">row</span><span class="p">[</span><span class="s2">"author"</span><span class="p">]</span> <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">rows</span><span class="p">],</span> <span class="n">models</span><span class="p">[</span><span class="s2">"random"</span><span class="p">])</span>
+
+    <span class="n">output</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="n">name</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">"beta"</span><span class="p">:</span> <span class="n">model</span><span class="o">.</span><span class="n">beta</span><span class="o">.</span><span class="n">tolist</span><span class="p">(),</span>
+            <span class="s2">"se"</span><span class="p">:</span> <span class="n">model</span><span class="o">.</span><span class="n">se</span><span class="o">.</span><span class="n">tolist</span><span class="p">(),</span>
+            <span class="s2">"tau2"</span><span class="p">:</span> <span class="n">model</span><span class="o">.</span><span class="n">tau2</span><span class="p">,</span>
+            <span class="s2">"QE"</span><span class="p">:</span> <span class="n">model</span><span class="o">.</span><span class="n">q</span><span class="p">,</span>
+            <span class="s2">"I2"</span><span class="p">:</span> <span class="n">model</span><span class="o">.</span><span class="n">i2</span><span class="p">,</span>
+            <span class="s2">"H2"</span><span class="p">:</span> <span class="n">model</span><span class="o">.</span><span class="n">h2</span><span class="p">,</span>
+            <span class="s2">"ci_lb"</span><span class="p">:</span> <span class="n">model</span><span class="o">.</span><span class="n">interval</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">tolist</span><span class="p">(),</span>
+            <span class="s2">"ci_ub"</span><span class="p">:</span> <span class="n">model</span><span class="o">.</span><span class="n">interval</span><span class="p">()[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">tolist</span><span class="p">(),</span>
+        <span class="p">}</span>
+        <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">model</span> <span class="ow">in</span> <span class="n">models</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
+    <span class="p">}</span>
+    <span class="k">if</span> <span class="n">predictions</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">output</span><span class="p">[</span><span class="s2">"prediction"</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">"latitude"</span><span class="p">:</span> <span class="p">[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">30.0</span><span class="p">,</span> <span class="mf">60.0</span><span class="p">],</span>
+            <span class="s2">"estimate"</span><span class="p">:</span> <span class="n">predictions</span><span class="o">.</span><span class="n">estimate</span><span class="o">.</span><span class="n">tolist</span><span class="p">(),</span>
+            <span class="s2">"se"</span><span class="p">:</span> <span class="n">predictions</span><span class="o">.</span><span class="n">se</span><span class="o">.</span><span class="n">tolist</span><span class="p">(),</span>
+            <span class="s2">"ci_lb"</span><span class="p">:</span> <span class="n">predictions</span><span class="o">.</span><span class="n">ci_lb</span><span class="o">.</span><span class="n">tolist</span><span class="p">(),</span>
+            <span class="s2">"ci_ub"</span><span class="p">:</span> <span class="n">predictions</span><span class="o">.</span><span class="n">ci_ub</span><span class="o">.</span><span class="n">tolist</span><span class="p">(),</span>
+            <span class="s2">"pi_lb"</span><span class="p">:</span> <span class="n">predictions</span><span class="o">.</span><span class="n">pi_lb</span><span class="o">.</span><span class="n">tolist</span><span class="p">(),</span>
+            <span class="s2">"pi_ub"</span><span class="p">:</span> <span class="n">predictions</span><span class="o">.</span><span class="n">pi_ub</span><span class="o">.</span><span class="n">tolist</span><span class="p">(),</span>
+        <span class="p">}</span>
+    <span class="n">output</span><span class="p">[</span><span class="s2">"yi"</span><span class="p">]</span> <span class="o">=</span> <span class="n">yi</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+    <span class="n">output</span><span class="p">[</span><span class="s2">"vi"</span><span class="p">]</span> <span class="o">=</span> <span class="n">vi</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+    <span class="n">result_path</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">ROOT</span> <span class="o">/</span> <span class="s2">"examples/bcg-results.json"</span>
+        <span class="k">if</span> <span class="n">case</span> <span class="o">==</span> <span class="s2">"all"</span>
+        <span class="k">else</span> <span class="n">ROOT</span> <span class="o">/</span> <span class="s2">"examples/generated/bcg"</span> <span class="o">/</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">case</span><span class="si">}</span><span class="s2">-results.json"</span>
+    <span class="p">)</span>
+    <span class="n">result_path</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">parents</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">result_path</span><span class="o">.</span><span class="n">write_text</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">output</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span> <span class="o">+</span> <span class="s2">"</span><span class="se">\n</span><span class="s2">"</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">fmt</span><span class="p">(</span><span class="n">values</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s2">","</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="nb">float</span><span class="p">(</span><span class="n">value</span><span class="p">)</span><span class="si">:</span><span class="s2">.16g</span><span class="si">}</span><span class="s2">"</span> <span class="k">for</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">atleast_1d</span><span class="p">(</span><span class="n">values</span><span class="p">))</span>
+
+    <span class="k">if</span> <span class="n">case</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">"all"</span><span class="p">,</span> <span class="s2">"effects"</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="p">(</span><span class="n">effect</span><span class="p">,</span> <span class="n">variance</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">yi</span><span class="p">,</span> <span class="n">vi</span><span class="p">),</span> <span class="n">start</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"EFFECT|</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">|</span><span class="si">{</span><span class="n">effect</span><span class="si">:</span><span class="s2">.16g</span><span class="si">}</span><span class="s2">|</span><span class="si">{</span><span class="n">variance</span><span class="si">:</span><span class="s2">.16g</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+    <span class="n">coefficient_labels</span> <span class="o">=</span> <span class="p">{</span><span class="s2">"fixed"</span><span class="p">:</span> <span class="p">[</span><span class="s2">"intrcpt"</span><span class="p">],</span> <span class="s2">"random"</span><span class="p">:</span> <span class="p">[</span><span class="s2">"intrcpt"</span><span class="p">],</span>
+                          <span class="s2">"latitude"</span><span class="p">:</span> <span class="p">[</span><span class="s2">"intrcpt"</span><span class="p">,</span> <span class="s2">"ablat"</span><span class="p">]}</span>
+    <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">model</span> <span class="ow">in</span> <span class="n">models</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="n">ci_lb</span><span class="p">,</span> <span class="n">ci_ub</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">interval</span><span class="p">()</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">"RESULT|</span><span class="si">{}</span><span class="s2">|beta=</span><span class="si">{}</span><span class="s2">|se=</span><span class="si">{}</span><span class="s2">|tau2=</span><span class="si">{:.16g}</span><span class="s2">|QE=</span><span class="si">{:.16g}</span><span class="s2">|I2=</span><span class="si">{:.16g}</span><span class="s2">|H2=</span><span class="si">{:.16g}</span><span class="s2">|ci_lb=</span><span class="si">{}</span><span class="s2">|ci_ub=</span><span class="si">{}</span><span class="s2">"</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+            <span class="n">name</span><span class="p">,</span> <span class="n">fmt</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">beta</span><span class="p">),</span> <span class="n">fmt</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">se</span><span class="p">),</span> <span class="n">model</span><span class="o">.</span><span class="n">tau2</span><span class="p">,</span> <span class="n">model</span><span class="o">.</span><span class="n">q</span><span class="p">,</span>
+            <span class="n">model</span><span class="o">.</span><span class="n">i2</span><span class="p">,</span> <span class="n">model</span><span class="o">.</span><span class="n">h2</span><span class="p">,</span> <span class="n">fmt</span><span class="p">(</span><span class="n">ci_lb</span><span class="p">),</span> <span class="n">fmt</span><span class="p">(</span><span class="n">ci_ub</span><span class="p">)))</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"COV|</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">|</span><span class="si">{</span><span class="n">fmt</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">covariance</span><span class="o">.</span><span class="n">ravel</span><span class="p">())</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"COVLABELS|</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">|</span><span class="si">{</span><span class="s1">','</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">coefficient_labels</span><span class="p">[</span><span class="n">name</span><span class="p">])</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"ROWS|</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">|</span><span class="si">{</span><span class="s1">','</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">model</span><span class="o">.</span><span class="n">row_indices</span><span class="p">)</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"DESIGN|</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">|</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">designs</span><span class="p">[</span><span class="n">name</span><span class="p">])</span><span class="si">}</span><span class="s2">|</span><span class="si">{</span><span class="n">designs</span><span class="p">[</span><span class="n">name</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2">|</span><span class="si">{</span><span class="n">fmt</span><span class="p">(</span><span class="n">designs</span><span class="p">[</span><span class="n">name</span><span class="p">]</span><span class="o">.</span><span class="n">ravel</span><span class="p">())</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">predictions</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">((</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">30.0</span><span class="p">,</span> <span class="mf">60.0</span><span class="p">)):</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">"PRED|latitude|x=</span><span class="si">{:.16g}</span><span class="s2">|estimate=</span><span class="si">{:.16g}</span><span class="s2">|se=</span><span class="si">{:.16g}</span><span class="s2">|ci_lb=</span><span class="si">{:.16g}</span><span class="s2">|ci_ub=</span><span class="si">{:.16g}</span><span class="s2">|pi_lb=</span><span class="si">{:.16g}</span><span class="s2">|pi_ub=</span><span class="si">{:.16g}</span><span class="s2">"</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                <span class="n">value</span><span class="p">,</span> <span class="n">predictions</span><span class="o">.</span><span class="n">estimate</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">predictions</span><span class="o">.</span><span class="n">se</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">predictions</span><span class="o">.</span><span class="n">ci_lb</span><span class="p">[</span><span class="n">i</span><span class="p">],</span>
+                <span class="n">predictions</span><span class="o">.</span><span class="n">ci_ub</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">predictions</span><span class="o">.</span><span class="n">pi_lb</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">predictions</span><span class="o">.</span><span class="n">pi_ub</span><span class="p">[</span><span class="n">i</span><span class="p">]))</span>
+    <span class="k">if</span> <span class="n">forest</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">forest_json</span> <span class="o">=</span> <span class="n">ROOT</span> <span class="o">/</span> <span class="s2">"examples/bcg-forest-data.json"</span>
+        <span class="n">forest_json</span><span class="o">.</span><span class="n">write_text</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">forest</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span> <span class="o">+</span> <span class="s2">"</span><span class="se">\n</span><span class="s2">"</span><span class="p">)</span>
+        <span class="n">svg_path</span> <span class="o">=</span> <span class="n">write_forest_svg</span><span class="p">(</span><span class="n">forest</span><span class="p">,</span> <span class="n">ROOT</span> <span class="o">/</span> <span class="s2">"examples/bcg-forest.svg"</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">forest</span><span class="p">[</span><span class="s2">"rows"</span><span class="p">])</span> <span class="o">!=</span> <span class="mi">13</span> <span class="ow">or</span> <span class="n">svg_path</span><span class="o">.</span><span class="n">stat</span><span class="p">()</span><span class="o">.</span><span class="n">st_size</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">"forest plot output is incomplete"</span><span class="p">)</span>
+        <span class="n">summary</span> <span class="o">=</span> <span class="n">forest</span><span class="p">[</span><span class="s2">"summary"</span><span class="p">]</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">"FOREST_SUMMARY|estimate=</span><span class="si">{estimate:.16g}</span><span class="s2">|se=</span><span class="si">{se:.16g}</span><span class="s2">|ci_lb=</span><span class="si">{ci_lb:.16g}</span><span class="s2">|ci_ub=</span><span class="si">{ci_ub:.16g}</span><span class="s2">|pi_lb=</span><span class="si">{pi_lb:.16g}</span><span class="s2">|pi_ub=</span><span class="si">{pi_ub:.16g}</span><span class="s2">|tau2=</span><span class="si">{tau2:.16g}</span><span class="s2">"</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">**</span><span class="n">summary</span><span class="p">))</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"FOREST_PLOT_OK </span><span class="si">{</span><span class="n">svg_path</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"BCG_EXAMPLE_OK case=</span><span class="si">{</span><span class="n">case</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">result_path</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">"__main__"</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
+</pre></div>
+</div>
+</section>
+<section id="models">
+<h2>Models<a class="headerlink" href="#models" title="Link to this heading"></a></h2>
+<p>The script fits an inverse-variance fixed-effect model, a REML random-effects model, and a REML model with absolute latitude as a moderator. REML allows underlying study effects to vary around a mean. The moderator coefficient is the estimated change in log risk ratio per degree of latitude.</p>
+</section>
+<section id="interpretation">
+<h2>Interpretation<a class="headerlink" href="#interpretation" title="Link to this heading"></a></h2>
+<p>The pooled log risk ratio is negative, consistent with lower tuberculosis risk among vaccinated participants in these studies. The negative latitude coefficient indicates a more negative estimated log risk ratio at higher absolute latitudes. These are associations in this set of studies, and the moderator result alone does not establish why effects vary geographically.</p>
+<p>The example also predicts mean log risk ratios at 0°, 30°, and 60° latitude. The confidence interval describes uncertainty in the fitted mean. The prediction interval is wider because it includes both uncertainty in that mean and the estimated variation among study effects. It writes the numeric results, the row-aligned forest data, and an original SVG plot under <code class="docutils literal notranslate"><span class="pre">examples/</span></code>.</p>
+</section>
+<section id="supplied-phylogenetic-correlation">
+<h2>Supplied phylogenetic correlation<a class="headerlink" href="#supplied-phylogenetic-correlation" title="Link to this heading"></a></h2>
+<p>The next runnable example uses five synthetic observations on three species and a supplied labelled species-correlation matrix. It includes an exact zero-boundary case and an interior variance-component case, each checked against the pinned R reference. The fixtures are for software parity, not empirical biological claims.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="sd">"""Fit boundary and interior synthetic phylogenetic examples."""</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">argparse</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">csv</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">json</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">metafor</span><span class="w"> </span><span class="kn">import</span> <span class="n">fit_phylo</span>
+
+<span class="n">ROOT</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)</span><span class="o">.</span><span class="n">parents</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s2">"Run a supplied-correlation phylogenetic fixture."</span><span class="p">)</span>
+<span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">"--case"</span><span class="p">,</span> <span class="n">choices</span><span class="o">=</span><span class="p">(</span><span class="s2">"all"</span><span class="p">,</span> <span class="s2">"boundary"</span><span class="p">,</span> <span class="s2">"interior"</span><span class="p">),</span> <span class="n">default</span><span class="o">=</span><span class="s2">"all"</span><span class="p">)</span>
+<span class="n">case_arg</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">()</span><span class="o">.</span><span class="n">case</span>
+<span class="n">case_for_fixture</span> <span class="o">=</span> <span class="p">{</span><span class="s2">"boundary"</span><span class="p">:</span> <span class="s2">"v1"</span><span class="p">,</span> <span class="s2">"interior"</span><span class="p">:</span> <span class="s2">"v2-interior"</span><span class="p">}</span>
+<span class="n">results</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="n">fixtures</span> <span class="o">=</span> <span class="p">(</span><span class="s2">"v1"</span><span class="p">,</span> <span class="s2">"v2-interior"</span><span class="p">)</span> <span class="k">if</span> <span class="n">case_arg</span> <span class="o">==</span> <span class="s2">"all"</span> <span class="k">else</span> <span class="p">(</span><span class="n">case_for_fixture</span><span class="p">[</span><span class="n">case_arg</span><span class="p">],)</span>
+<span class="k">for</span> <span class="n">case</span> <span class="ow">in</span> <span class="n">fixtures</span><span class="p">:</span>
+    <span class="n">base</span> <span class="o">=</span> <span class="n">ROOT</span> <span class="o">/</span> <span class="s2">"reference/phylogeny"</span> <span class="o">/</span> <span class="n">case</span>
+    <span class="n">observations</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">csv</span><span class="o">.</span><span class="n">DictReader</span><span class="p">((</span><span class="n">base</span> <span class="o">/</span> <span class="s2">"observations.csv"</span><span class="p">)</span><span class="o">.</span><span class="n">open</span><span class="p">()))</span>
+    <span class="n">matrix_rows</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">csv</span><span class="o">.</span><span class="n">reader</span><span class="p">((</span><span class="n">base</span> <span class="o">/</span> <span class="s2">"species-correlation.csv"</span><span class="p">)</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">newline</span><span class="o">=</span><span class="s2">""</span><span class="p">)))</span>
+    <span class="n">labels</span> <span class="o">=</span> <span class="n">matrix_rows</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">:]</span>
+    <span class="k">if</span> <span class="p">[</span><span class="n">row</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">matrix_rows</span><span class="p">[</span><span class="mi">1</span><span class="p">:]]</span> <span class="o">!=</span> <span class="n">labels</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"correlation matrix row and column labels must match"</span><span class="p">)</span>
+    <span class="n">A</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">([[</span><span class="nb">float</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">row</span><span class="p">[</span><span class="mi">1</span><span class="p">:]]</span> <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">matrix_rows</span><span class="p">[</span><span class="mi">1</span><span class="p">:]])</span>
+    <span class="n">fit</span> <span class="o">=</span> <span class="n">fit_phylo</span><span class="p">([</span><span class="nb">float</span><span class="p">(</span><span class="n">r</span><span class="p">[</span><span class="s2">"yi"</span><span class="p">])</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">observations</span><span class="p">],</span>
+                    <span class="p">[</span><span class="nb">float</span><span class="p">(</span><span class="n">r</span><span class="p">[</span><span class="s2">"vi"</span><span class="p">])</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">observations</span><span class="p">],</span>
+                    <span class="p">[</span><span class="n">r</span><span class="p">[</span><span class="s2">"species"</span><span class="p">]</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">observations</span><span class="p">],</span> <span class="n">A</span><span class="p">,</span> <span class="n">labels</span><span class="p">)</span>
+    <span class="n">low</span><span class="p">,</span> <span class="n">high</span> <span class="o">=</span> <span class="n">fit</span><span class="o">.</span><span class="n">interval</span><span class="p">()</span>
+    <span class="n">results</span><span class="p">[</span><span class="n">case</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s2">"beta"</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="n">fit</span><span class="o">.</span><span class="n">beta</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="s2">"se"</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="n">fit</span><span class="o">.</span><span class="n">se</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span>
+                     <span class="s2">"tau2"</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="n">fit</span><span class="o">.</span><span class="n">tau2</span><span class="p">),</span> <span class="s2">"ci_lb"</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="n">low</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span>
+                     <span class="s2">"ci_ub"</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="n">high</span><span class="p">[</span><span class="mi">0</span><span class="p">])}</span>
+    <span class="n">values</span> <span class="o">=</span> <span class="n">results</span><span class="p">[</span><span class="n">case</span><span class="p">]</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">"PHYLO|</span><span class="si">{}</span><span class="s2">|beta=</span><span class="si">{:.16g}</span><span class="s2">|se=</span><span class="si">{:.16g}</span><span class="s2">|tau2=</span><span class="si">{:.16g}</span><span class="s2">|ci_lb=</span><span class="si">{:.16g}</span><span class="s2">|ci_ub=</span><span class="si">{:.16g}</span><span class="s2">"</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+        <span class="n">case</span><span class="p">,</span> <span class="n">values</span><span class="p">[</span><span class="s2">"beta"</span><span class="p">],</span> <span class="n">values</span><span class="p">[</span><span class="s2">"se"</span><span class="p">],</span> <span class="n">values</span><span class="p">[</span><span class="s2">"tau2"</span><span class="p">],</span> <span class="n">values</span><span class="p">[</span><span class="s2">"ci_lb"</span><span class="p">],</span> <span class="n">values</span><span class="p">[</span><span class="s2">"ci_ub"</span><span class="p">]))</span>
+<span class="n">out</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">ROOT</span> <span class="o">/</span> <span class="s2">"examples/phylogeny-results.json"</span>
+    <span class="k">if</span> <span class="n">case_arg</span> <span class="o">==</span> <span class="s2">"all"</span>
+    <span class="k">else</span> <span class="n">ROOT</span> <span class="o">/</span> <span class="s2">"examples/generated/phylogeny"</span> <span class="o">/</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">case_arg</span><span class="si">}</span><span class="s2">-results.json"</span>
+<span class="p">)</span>
+<span class="n">out</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">parents</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">out</span><span class="o">.</span><span class="n">write_text</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">results</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span> <span class="o">+</span> <span class="s2">"</span><span class="se">\n</span><span class="s2">"</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">"utf-8"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"PHYLOGENY_EXAMPLE_OK </span><span class="si">{</span><span class="n">out</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Run <code class="docutils literal notranslate"><span class="pre">OPENBLAS_NUM_THREADS=1</span> <span class="pre">.venv/bin/python</span> <span class="pre">tools/compare-phylogeny.py</span></code> to fit R, Python and Julia from the shared fixtures and write <code class="docutils literal notranslate"><span class="pre">examples/phylogeny-comparison.html</span></code>. Tree estimation and prediction for unseen species are not part of this first example. The correlation matrix and observation order are supplied explicitly. In the built site, open the <a href="_static/comparisons/phylogeny-comparison.html">phylogeny comparison</a>.</p>
+</section>
+<section id="differences-from-r-metafor">
+<h2>Differences from R metafor<a class="headerlink" href="#differences-from-r-metafor" title="Link to this heading"></a></h2>
+<p>This experimental Python port supports log risk ratios, matrix and optional pandas/Patsy formula inputs, fixed-effect and REML models, normal mean and new-study prediction intervals, forest data, and the supplied-correlation phylogenetic model shown here. It omits non-finite rows with a runtime warning and preserves row indices. Warning wording and categories differ from R. REML with zero sampling variances is unsupported; the fit raises an explicit error instead of silently discarding those rows. Full R formula semantics, other effect-size measures, multivariate structures, and many diagnostic and inference options remain unsupported. See the <a class="reference external" href="https://github.com/itchyshin/metafor-py/blob/main/COMPATIBILITY.md">compatibility table</a>.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="index.html" class="btn btn-neutral float-left" title="metafor-py: selected native Python methods for meta-analysis" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="dependent.html" class="btn btn-neutral float-right" title="How should we combine dependent effect estimates?" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright .</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

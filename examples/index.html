@@ -1,0 +1,231 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tutorials and comparisons &mdash; metafor-py  documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../_static/metafor.css?v=9dfbdc1e" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="From counts to log risk ratios" href="bcg-effects.html" />
+    <link rel="prev" title="How should we combine dependent effect estimates?" href="../dependent.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            metafor-py
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../bcg.html">Does BCG vaccination reduce tuberculosis risk?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dependent.html">How should we combine dependent effect estimates?</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Tutorials and comparisons</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="bcg-effects.html">From counts to log risk ratios</a></li>
+<li class="toctree-l2"><a class="reference internal" href="bcg-models.html">Fixed-effect and random-effects estimates</a></li>
+<li class="toctree-l2"><a class="reference internal" href="bcg-moderator.html">Does latitude explain effect variation?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="bcg-prediction.html">Mean confidence intervals and prediction intervals</a></li>
+<li class="toctree-l2"><a class="reference internal" href="bcg-forest.html">Building forest-plot data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dependent-gls.html">Correlated sampling errors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dependent-nested.html">Nested study and effect variation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dependent-bivariate.html">Two correlated outcomes per study</a></li>
+<li class="toctree-l2"><a class="reference internal" href="phylogeny.html">Supplied phylogenetic correlation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="differences.html">Differences from R metafor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="odds-ratio.html">Odds ratios from 2 × 2 counts</a></li>
+<li class="toctree-l2"><a class="reference internal" href="risk-difference.html">Risk differences from 2 × 2 counts</a></li>
+<li class="toctree-l2"><a class="reference internal" href="effect-scale.html">Choosing an effect scale</a></li>
+<li class="toctree-l2"><a class="reference internal" href="zero-cell-policies.html">Zero-cell correction policies</a></li>
+<li class="toctree-l2"><a class="reference internal" href="missing-rows.html">Missing observations and row identity</a></li>
+<li class="toctree-l2"><a class="reference internal" href="odds-ratio-models.html">Pooling log odds ratios</a></li>
+<li class="toctree-l2"><a class="reference internal" href="risk-difference-models.html">Pooling risk differences</a></li>
+<li class="toctree-l2"><a class="reference internal" href="phylo-boundary.html">Phylogenetic model at the zero boundary</a></li>
+<li class="toctree-l2"><a class="reference internal" href="phylo-interior.html">Phylogenetic model with an interior variance</a></li>
+<li class="toctree-l2"><a class="reference internal" href="phylo-labels.html">Aligning a phylogenetic matrix by species</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">metafor-py</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Tutorials and comparisons</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/examples/index.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="tutorials-and-comparisons">
+<h1>Tutorials and comparisons<a class="headerlink" href="#tutorials-and-comparisons" title="Link to this heading"></a></h1>
+<p>Each tutorial asks a question, introduces the fixture and model, then interprets the results. Every runnable stage has a named selector. The same cases are implemented natively in Julia and Python; comparisons use the pinned R reference.</p>
+<p>Install the package first with <code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">-m</span> <span class="pre">pip</span> <span class="pre">install</span> <span class="pre">-e</span> <span class="pre">.</span></code>. The comparison artifacts are included in the built site.</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Page</p></th>
+<th class="head"><p>Question</p></th>
+<th class="head"><p>Runnable Python command</p></th>
+<th class="head"><p>Comparison</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><a class="reference internal" href="bcg-effects.html"><span class="std std-doc">BCG effect sizes</span></a></p></td>
+<td><p>How do raw counts become log risk ratios?</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">examples/bcg.py</span> <span class="pre">--case=effects</span></code></p></td>
+<td><p><a class="reference download internal" download="" href="../_downloads/b0c83abb687aa4830acc1d928f5cf292/bcg-comparison.html"><span class="xref download myst">R, Python, Julia</span></a></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="bcg-models.html"><span class="std std-doc">Fixed and random effects</span></a></p></td>
+<td><p>How do FE and REML pooled estimates differ?</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">examples/bcg.py</span> <span class="pre">--case=models</span></code></p></td>
+<td><p><a class="reference download internal" download="" href="../_downloads/b0c83abb687aa4830acc1d928f5cf292/bcg-comparison.html"><span class="xref download myst">R, Python, Julia</span></a></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="bcg-moderator.html"><span class="std std-doc">Meta-regression</span></a></p></td>
+<td><p>How does latitude relate to the estimated effect?</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">examples/bcg.py</span> <span class="pre">--case=moderator</span></code></p></td>
+<td><p><a class="reference download internal" download="" href="../_downloads/b0c83abb687aa4830acc1d928f5cf292/bcg-comparison.html"><span class="xref download myst">R, Python, Julia</span></a></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="bcg-prediction.html"><span class="std std-doc">Predictions</span></a></p></td>
+<td><p>What are the fitted means and intervals at selected latitudes?</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">examples/bcg.py</span> <span class="pre">--case=prediction</span></code></p></td>
+<td><p><a class="reference download internal" download="" href="../_downloads/b0c83abb687aa4830acc1d928f5cf292/bcg-comparison.html"><span class="xref download myst">R, Python, Julia</span></a></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="bcg-forest.html"><span class="std std-doc">Forest plot data</span></a></p></td>
+<td><p>Which quantities feed the forest plot?</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">examples/bcg.py</span> <span class="pre">--case=forest</span></code></p></td>
+<td><p><a class="reference download internal" download="" href="../_downloads/b0c83abb687aa4830acc1d928f5cf292/bcg-comparison.html"><span class="xref download myst">R, Python, Julia</span></a></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="dependent-gls.html"><span class="std std-doc">Correlated sampling errors</span></a></p></td>
+<td><p>How does a supplied covariance matrix change GLS inference?</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">examples/dependent.py</span> <span class="pre">--case=gls</span></code></p></td>
+<td><p><a class="reference download internal" download="" href="../_downloads/e35642efbd97673c895c60d92e452873/dependent-comparison.html"><span class="xref download myst">R, Python, Julia</span></a></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="dependent-nested.html"><span class="std std-doc">Nested effects</span></a></p></td>
+<td><p>How are study and effect-level variances represented?</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">examples/dependent.py</span> <span class="pre">--case=nested</span></code></p></td>
+<td><p><a class="reference download internal" download="" href="../_downloads/e35642efbd97673c895c60d92e452873/dependent-comparison.html"><span class="xref download myst">R, Python, Julia</span></a></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="dependent-bivariate.html"><span class="std std-doc">Two outcomes</span></a></p></td>
+<td><p>How are correlated outcomes modeled within studies?</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">examples/dependent.py</span> <span class="pre">--case=bivariate</span></code></p></td>
+<td><p><a class="reference download internal" download="" href="../_downloads/e35642efbd97673c895c60d92e452873/dependent-comparison.html"><span class="xref download myst">R, Python, Julia</span></a></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="phylogeny.html"><span class="std std-doc">Phylogenetic boundary and interior cases</span></a></p></td>
+<td><p>What changes when species share a supplied correlation?</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">examples/phylogeny.py</span> <span class="pre">--case=boundary</span></code><br><code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">examples/phylogeny.py</span> <span class="pre">--case=interior</span></code></p></td>
+<td><p><a class="reference download internal" download="" href="../_downloads/9f98a96f0a09078529821a705b5f66c1/phylogeny-comparison.html"><span class="xref download myst">R, Python, Julia</span></a></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="differences.html"><span class="std std-doc">Differences from R metafor</span></a></p></td>
+<td><p>Which functions and options are verified or differ?</p></td>
+<td><p>See the tutorials</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">COMPATIBILITY.md</span></code></p></td>
+</tr>
+</tbody>
+</table>
+<p>Omit <code class="docutils literal notranslate"><span class="pre">--case</span></code> from the BCG or dependent command to regenerate the complete comparison outputs. The phylogenetic commands exercise separate zero-boundary and interior variance cases.</p>
+<p>| <a class="reference internal" href="odds-ratio.html"><span class="std std-doc">Odds ratios</span></a> | How do counts become a log odds ratio? | <code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">examples/effect-sizes.py</span> <span class="pre">--case=odds-ratio</span></code> | <a class="reference download internal" download="" href="../_downloads/027df0cd781fdc326b7b4b9170018e5b/effect-size-comparison.html"><span class="xref download myst">R, Python, Julia</span></a> |
+| <a class="reference internal" href="risk-difference.html"><span class="std std-doc">Risk differences</span></a> | How do counts become an absolute probability contrast? | <code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">examples/effect-sizes.py</span> <span class="pre">--case=risk-difference</span></code> | <a class="reference download internal" download="" href="../_downloads/027df0cd781fdc326b7b4b9170018e5b/effect-size-comparison.html"><span class="xref download myst">R, Python, Julia</span></a> |
+| <a class="reference internal" href="effect-scale.html"><span class="std std-doc">Choosing a scale</span></a> | Why do effect magnitudes differ by scale? | <code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">examples/effect-sizes.py</span> <span class="pre">--case=scale</span></code> | <a class="reference download internal" download="" href="../_downloads/027df0cd781fdc326b7b4b9170018e5b/effect-size-comparison.html"><span class="xref download myst">R, Python, Julia</span></a> |
+| <a class="reference internal" href="zero-cell-policies.html"><span class="std std-doc">Zero-cell policies</span></a> | How do correction choices change results? | <code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">examples/effect-sizes.py</span> <span class="pre">--case=zero-correction</span></code> | <a class="reference download internal" download="" href="../_downloads/027df0cd781fdc326b7b4b9170018e5b/effect-size-comparison.html"><span class="xref download myst">R, Python, Julia</span></a> |
+| <a class="reference internal" href="missing-rows.html"><span class="std std-doc">Missing observations</span></a> | Are incomplete studies kept aligned? | <code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">-m</span> <span class="pre">pytest</span> <span class="pre">tests/test_effect_sizes.py</span> <span class="pre">-k</span> <span class="pre">missing</span></code> | <a class="reference download internal" download="" href="../_downloads/027df0cd781fdc326b7b4b9170018e5b/effect-size-comparison.html"><span class="xref download myst">R, Python, Julia</span></a> |
+| <a class="reference internal" href="odds-ratio-models.html"><span class="std std-doc">Pooling log odds ratios</span></a> | How do FE and REML summaries differ? | <code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">examples/effect-sizes.py</span> <span class="pre">--case=odds-ratio</span></code> | <a class="reference download internal" download="" href="../_downloads/027df0cd781fdc326b7b4b9170018e5b/effect-size-comparison.html"><span class="xref download myst">R, Python, Julia</span></a> |
+| <a class="reference internal" href="risk-difference-models.html"><span class="std std-doc">Pooling risk differences</span></a> | How does heterogeneity look on an absolute scale? | <code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">examples/effect-sizes.py</span> <span class="pre">--case=risk-difference</span></code> | <a class="reference download internal" download="" href="../_downloads/027df0cd781fdc326b7b4b9170018e5b/effect-size-comparison.html"><span class="xref download myst">R, Python, Julia</span></a> |
+| <a class="reference internal" href="phylo-boundary.html"><span class="std std-doc">Phylogenetic boundary</span></a> | What does a zero variance boundary mean? | <code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">examples/phylogeny.py</span> <span class="pre">--case=boundary</span></code> | <a class="reference download internal" download="" href="../_downloads/9f98a96f0a09078529821a705b5f66c1/phylogeny-comparison.html"><span class="xref download myst">R, Python, Julia</span></a> |
+| <a class="reference internal" href="phylo-interior.html"><span class="std std-doc">Phylogenetic interior fit</span></a> | What changes when phylogenetic variance is positive? | <code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">examples/phylogeny.py</span> <span class="pre">--case=interior</span></code> | <a class="reference download internal" download="" href="../_downloads/9f98a96f0a09078529821a705b5f66c1/phylogeny-comparison.html"><span class="xref download myst">R, Python, Julia</span></a> |
+| <a class="reference internal" href="phylo-labels.html"><span class="std std-doc">Phylogenetic matrix labels</span></a> | Why check species labels and order? | <code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">examples/phylogeny.py</span> <span class="pre">--case=interior</span></code> | <a class="reference download internal" download="" href="../_downloads/9f98a96f0a09078529821a705b5f66c1/phylogeny-comparison.html"><span class="xref download myst">R, Python, Julia</span></a> |</p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="bcg-effects.html">From counts to log risk ratios</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bcg-models.html">Fixed-effect and random-effects estimates</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bcg-moderator.html">Does latitude explain effect variation?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bcg-prediction.html">Mean confidence intervals and prediction intervals</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bcg-forest.html">Building forest-plot data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="dependent-gls.html">Correlated sampling errors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="dependent-nested.html">Nested study and effect variation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="dependent-bivariate.html">Two correlated outcomes per study</a></li>
+<li class="toctree-l1"><a class="reference internal" href="phylogeny.html">Supplied phylogenetic correlation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="differences.html">Differences from R metafor</a></li>
+<li class="toctree-l1"><a class="reference internal" href="odds-ratio.html">Odds ratios from 2 × 2 counts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="risk-difference.html">Risk differences from 2 × 2 counts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="effect-scale.html">Choosing an effect scale</a></li>
+<li class="toctree-l1"><a class="reference internal" href="zero-cell-policies.html">Zero-cell correction policies</a></li>
+<li class="toctree-l1"><a class="reference internal" href="missing-rows.html">Missing observations and row identity</a></li>
+<li class="toctree-l1"><a class="reference internal" href="odds-ratio-models.html">Pooling log odds ratios</a></li>
+<li class="toctree-l1"><a class="reference internal" href="risk-difference-models.html">Pooling risk differences</a></li>
+<li class="toctree-l1"><a class="reference internal" href="phylo-boundary.html">Phylogenetic model at the zero boundary</a></li>
+<li class="toctree-l1"><a class="reference internal" href="phylo-interior.html">Phylogenetic model with an interior variance</a></li>
+<li class="toctree-l1"><a class="reference internal" href="phylo-labels.html">Aligning a phylogenetic matrix by species</a></li>
+</ul>
+</div>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../dependent.html" class="btn btn-neutral float-left" title="How should we combine dependent effect estimates?" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="bcg-effects.html" class="btn btn-neutral float-right" title="From counts to log risk ratios" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright .</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,3 @@
+# Synthetic phylogenetic fixture
+
+This original synthetic fixture contains five observations on three named species, a supplied positive-definite correlation matrix, and sampling variances. It uses no copied tree, dataset, prose, or figure. R reference values are generated with the pinned metafor 5.2-1 source. The model adds one species-level variance component proportional to the supplied correlation matrix. The fixture and its script are original project material under GPL-2.0-or-later. The fixture is for software parity and makes no empirical biological claim. The tutorial page uses original prose; the upstream Berkey example is linked as further reading only.

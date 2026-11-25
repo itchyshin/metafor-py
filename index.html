@@ -1,0 +1,182 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>metafor-py: selected native Python methods for meta-analysis &mdash; metafor-py  documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="_static/metafor.css?v=9dfbdc1e" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Does BCG vaccination reduce tuberculosis risk?" href="bcg.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="#" class="icon icon-home">
+            metafor-py
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="bcg.html">Does BCG vaccination reduce tuberculosis risk?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="dependent.html">How should we combine dependent effect estimates?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples/index.html">Tutorials and comparisons</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="#">metafor-py</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="#" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">metafor-py: selected native Python methods for meta-analysis</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/index.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="metafor-py-selected-native-python-methods-for-meta-analysis">
+<h1>metafor-py: selected native Python methods for meta-analysis<a class="headerlink" href="#metafor-py-selected-native-python-methods-for-meta-analysis" title="Link to this heading"></a></h1>
+<p><code class="docutils literal notranslate"><span class="pre">metafor-py</span></code> is an experimental Python port of selected methods from Wolfgang Viechtbauer’s R package <a class="reference external" href="https://www.metafor-project.org/">metafor</a>. It is a separate implementation, not the R package or a complete replacement. The compatibility table records the scope by function and option.</p>
+<p>The project follows the R package’s question-to-analysis path: calculate study effects, fit a model, interpret uncertainty, and inspect plots. Its core uses native Python arrays and structured results; optional table inputs use pandas and Patsy.</p>
+<p>The tutorials below use pinned R reference inputs shared with Metafor.jl. The wording and plots are original. Local comparison pages show R, Python, and Julia estimates side by side.</p>
+<p>Start with the <a class="reference external" href="examples/bcg-effects.html">BCG effect-size tutorial</a>, then follow 20 focused topic pages from model fitting and meta-regression through intervals and forest-plot data. Continue with correlated effects, nested effects, two outcomes, and the supplied-correlation phylogenetic cases. Each page includes a runnable command and interpretation.</p>
+<p>To try the package from a checkout, run <code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">-m</span> <span class="pre">pip</span> <span class="pre">install</span> <span class="pre">-e</span> <span class="pre">'.[tables]'</span></code> from the repository root. The core examples need Python and NumPy; the table and formula adapter uses optional pandas and Patsy dependencies.</p>
+<section id="choose-a-starting-point">
+<h2>Choose a starting point<a class="headerlink" href="#choose-a-starting-point" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p>To analyze two-group counts, start with <a class="reference external" href="examples/bcg-effects.html">BCG effect sizes</a>.</p></li>
+<li><p>To model dependent outcomes, see <a class="reference external" href="examples/dependent-gls.html">correlated sampling errors</a>.</p></li>
+<li><p>To use a species correlation matrix, see the <a class="reference external" href="examples/phylogeny.html">phylogenetic model</a>.</p></li>
+</ul>
+<p>Compare all three implementations: <a class="reference external" href="_static/comparisons/bcg-comparison.html">BCG</a>, <a class="reference external" href="_static/comparisons/dependent-comparison.html">dependent effects</a>, <a class="reference external" href="_static/comparisons/phylogeny-comparison.html">phylogenetic models</a>, and <a class="reference external" href="_static/comparisons/effect-size-comparison.html">effect sizes</a>. See also the <a class="reference external" href="https://itchyshin.github.io/Metafor.jl/">Metafor.jl documentation</a> and <a class="reference external" href="https://github.com/itchyshin/Metafor.jl">Julia source repository</a>.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This is an experimental, unreleased port. A passing example establishes parity only for its named fixture, options, and outputs.</p>
+</div>
+</section>
+<section id="what-is-implemented">
+<h2>What is implemented<a class="headerlink" href="#what-is-implemented" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p>Log risk ratios from 2×2 counts, fixed-effect and REML models, and a latitude moderator.</p></li>
+<li><p>Mean and new-study prediction intervals, row-aligned forest data, and an original SVG.</p></li>
+<li><p>Supplied sampling covariance, nested scalar random effects, two-outcome covariance, and supplied phylogenetic correlation.</p></li>
+<li><p>Versioned R reference fixtures. The Python and Julia ports run without R.</p></li>
+</ul>
+<p>The package does not yet implement the full R API. See <a class="reference download internal" download="" href="_downloads/58ad1e5901d01d52355fcc0c9e84a8a9/COMPATIBILITY.md"><code class="xref download docutils literal notranslate"><span class="pre">the</span> <span class="pre">compatibility</span> <span class="pre">table</span></code></a> for verified, partial, unsupported, and intentional differences.</p>
+<p>Project-intended maintainers are Shinichi Nakagawa, Yefeng Yang, and Wolfgang Viechtbauer. This records the intended project team; it does not imply that anyone has accepted a role.</p>
+<p>The upstream R project is at <a class="reference external" href="https://www.metafor-project.org/">metafor-project.org</a>; its manuals and function references are at <a class="reference external" href="https://wviechtb.github.io/metafor/">wviechtb.github.io/metafor</a>.</p>
+<p>The <a class="reference external" href="https://github.com/itchyshin/metafor-py">metafor-py source repository</a> contains the implementation, tests, fixtures, and this site’s source.</p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="bcg.html">Does BCG vaccination reduce tuberculosis risk?</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="bcg.html#data">Data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="bcg.html#models">Models</a></li>
+<li class="toctree-l2"><a class="reference internal" href="bcg.html#interpretation">Interpretation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="bcg.html#supplied-phylogenetic-correlation">Supplied phylogenetic correlation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="bcg.html#differences-from-r-metafor">Differences from R metafor</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="dependent.html">How should we combine dependent effect estimates?</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="dependent.html#data">Data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dependent.html#model">Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dependent.html#interpretation">Interpretation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dependent.html#differences-from-r-metafor">Differences from R metafor</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="examples/index.html">Tutorials and comparisons</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="examples/bcg-effects.html">From counts to log risk ratios</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples/bcg-models.html">Fixed-effect and random-effects estimates</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples/bcg-moderator.html">Does latitude explain effect variation?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples/bcg-prediction.html">Mean confidence intervals and prediction intervals</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples/bcg-forest.html">Building forest-plot data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples/dependent-gls.html">Correlated sampling errors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples/dependent-nested.html">Nested study and effect variation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples/dependent-bivariate.html">Two correlated outcomes per study</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples/phylogeny.html">Supplied phylogenetic correlation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples/differences.html">Differences from R metafor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples/odds-ratio.html">Odds ratios from 2 × 2 counts</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples/risk-difference.html">Risk differences from 2 × 2 counts</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples/effect-scale.html">Choosing an effect scale</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples/zero-cell-policies.html">Zero-cell correction policies</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples/missing-rows.html">Missing observations and row identity</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples/odds-ratio-models.html">Pooling log odds ratios</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples/risk-difference-models.html">Pooling risk differences</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples/phylo-boundary.html">Phylogenetic model at the zero boundary</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples/phylo-interior.html">Phylogenetic model with an interior variance</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples/phylo-labels.html">Aligning a phylogenetic matrix by species</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="bcg.html" class="btn btn-neutral float-right" title="Does BCG vaccination reduce tuberculosis risk?" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright .</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
