@@ -1,3 +1,7 @@
+archive <- Sys.getenv("METAFOR_SOURCE_ARCHIVE")
+stopifnot(file.exists(archive),
+          digest::digest(archive, algo="sha256", file=TRUE) ==
+              "25c421cf52279294b11ab3166adfeb327dd22034a03a46487f081a19a163339b")
 suppressPackageStartupMessages(library(metafor))
 stopifnot(as.character(packageVersion("metafor")) == "5.2.1")
 obs <- read.csv("observations.csv", stringsAsFactors=FALSE)

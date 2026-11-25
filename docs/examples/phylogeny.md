@@ -11,7 +11,7 @@ python examples/phylogeny.py --case=boundary
 python examples/phylogeny.py --case=interior
 ```
 
-The <a href="../_static/comparisons/phylogeny-comparison.html">comparison page</a> shows the R, Python, and Julia estimates and intervals. The fixtures are synthetic software checks and make no empirical biological claim.
+The [R and Python comparison guide](../compare) shows the R and Python estimates and intervals. The fixtures are synthetic software checks and make no empirical biological claim.
 
 ## Provenance
 

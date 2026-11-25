@@ -10,7 +10,7 @@ Run the example from the repository root:
 python examples/bcg.py --case=forest
 ```
 
-Inspect the `examples/bcg-forest.svg` file and accompanying JSON data in the repository. The <a href="../_static/comparisons/bcg-comparison.html">comparison artifact</a> checks the forest rows, order, and pooled summary against R and Julia.
+Inspect the `examples/bcg-forest.svg` file and accompanying JSON data in the repository. The [R and Python comparison guide](../compare) checks the forest rows, order, and pooled summary against pinned R results.
 
 ## Provenance
 

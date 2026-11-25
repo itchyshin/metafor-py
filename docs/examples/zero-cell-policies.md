@@ -14,7 +14,7 @@ From the repository root, run:
 python examples/effect-sizes.py --case=zero-correction
 ```
 
-The equivalent Julia command is `julia --project=. examples/effect-sizes.jl --case=zero-correction` in [Metafor.jl](https://github.com/itchyshin/Metafor.jl). The shared three-language comparison is [effect-size parity](../_static/comparisons/effect-size-comparison.html); phylogenetic results are in the [phylogeny comparison](../_static/comparisons/phylogeny-comparison.html).
+For checked outputs, see the [R and Python comparison guide](../compare).
 
 ## Interpretation
 

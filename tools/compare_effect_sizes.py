@@ -5,14 +5,14 @@ import csv
 import html
 import math
 import os
-import shutil
+from pairwise_report import write_report
 import json
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 JULIA_ROOT = Path(os.environ.get("METAFOR_JL_ROOT", ROOT.parent / "Metafor.jl"))
 REF = ROOT / "reference/effect-sizes/v1"
-OUT = ROOT / "examples/effect-size-comparison.html"
+OUT = ROOT / "examples/generated/effect-size-comparison.html"
 TOLS = {"effect": 1e-12, "model": 1e-8, "correction": 1e-12}
 
 
@@ -81,8 +81,14 @@ def main():
         if math.isfinite(ref) and math.isfinite(got):
             maximum[cat] = max(maximum[cat], abs(ref - got))
     body = "\n".join(f"<tr><th>{html.escape(k)}</th><td>{v:.3g}</td><td>≤ {TOLS[k]:.0e}</td></tr>" for k, v in maximum.items())
+    for language, root in (("Python", ROOT), ("Julia", JULIA_ROOT)):
+        report_rows = [(name.split(" ", 1)[1], ref, got, max(tol, tol * max(abs(ref), abs(got))))
+                for name, ref, got, tol in checks if name.startswith(language + " ")]
+        write_report(root, "effect-size", "Effect sizes and zero-cell policies", language, report_rows,
+                     "The fixtures cover log risk ratios, log odds ratios, risk differences, and "
+                     "four zero-cell policies. See reference/effect-sizes/v1/PROVENANCE.md.")
+    OUT.parent.mkdir(parents=True, exist_ok=True)
     OUT.write_text(f"""<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width"><title>Effect-size parity: R, Julia, Python</title><style>body{{font:16px/1.55 system-ui,sans-serif;max-width:900px;margin:3rem auto;padding:0 1rem;color:#18304a}}table{{border-collapse:collapse}}th,td{{padding:.55rem 1rem;border:1px solid #ccd5df;text-align:left}}.ok{{color:#14723a;font-weight:700}}</style><h1>Effect sizes: R, Julia, and Python</h1><p>Native results are compared with pinned R metafor 5.2-1 references. The BCG study counts are summarized as log risk ratios, log odds ratios, and risk differences. Hand-checkable tables exercise all four zero-cell policies.</p><p class="ok">PASS: {len(checks)} numeric comparisons passed their stated absolute and relative tolerances.</p><table><thead><tr><th>Result group</th><th>Maximum absolute difference</th><th>Tolerance</th></tr></thead><tbody>{body}</tbody></table><p>Open the <a href="https://itchyshin.github.io/metafor-py/">Python tutorials</a> or <a href="https://itchyshin.github.io/Metafor.jl/">Julia tutorials</a>. Model comparisons include FE and REML estimates, standard errors, heterogeneity summaries, and 95% normal intervals. The artifact reports numeric parity for these fixtures; it does not claim full metafor compatibility. Reference provenance and exact versions are recorded in each repository under <code>reference/effect-sizes/v1/</code>.</p><p>Rebuild with <code>python tools/compare_effect_sizes.py</code> after running `--case=all`, `--case=scale`, and `--case=zero-correction` in each native example script.</p></html>""")
-    shutil.copy2(OUT, JULIA_ROOT / "examples/effect-size-comparison.html")
     print(f"EFFECT_SIZE_PARITY_OK checks={len(checks)} max={maximum} artifact={OUT}")
 
 

@@ -1,0 +1,16 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width">
+<title>Supplied phylogenetic correlation: R vs Python</title><style>
+body{margin:2rem auto;padding:0 1rem;max-width:68rem;font:1rem/1.5 system-ui;color:#172c39}
+.table-wrap{overflow:auto}table{border-collapse:collapse;width:100%;font-variant-numeric:tabular-nums}
+th,td{text-align:left;border-bottom:1px solid #cad6dc;padding:.45rem .65rem}
+th{background:#e9f1f4}caption{text-align:left;padding:.5rem 0;font-weight:600}
+</style></head><body><main>
+<h1>Supplied phylogenetic correlation: R vs Python</h1>
+<p>All 10 numerical checks passed against the pinned R metafor 5.2-1 reference.</p>
+<p>The synthetic fixtures exercise a zero-variance boundary and an interior solution using a supplied labelled correlation matrix. See reference/phylogeny. <a href="https://github.com/itchyshin/metafor-py/blob/main/reference/phylogeny/v1/PROVENANCE.md">Read the fixture provenance.</a></p>
+<div class="table-wrap"><table>
+<caption>Checked values and allowed absolute differences</caption>
+<thead><tr><th scope="col">Quantity</th><th scope="col">R</th><th scope="col">Python</th><th scope="col">Allowed difference</th></tr></thead>
+<tbody><tr><td>v1 beta</td><td>0.232112815438</td><td>0.232112815438</td><td>3.321e-05</td></tr><tr><td>v1 se</td><td>0.139979499454</td><td>0.139979499453</td><td>2.4e-05</td></tr><tr><td>v1 tau2</td><td>5.23583335677e-13</td><td>0</td><td>1e-05</td></tr><tr><td>v1 ci_lb</td><td>-0.0422419620665</td><td>-0.0422419620645</td><td>1.422e-05</td></tr><tr><td>v1 ci_ub</td><td>0.506467592942</td><td>0.50646759294</td><td>6.065e-05</td></tr><tr><td>v2-interior beta</td><td>-0.0680768727778</td><td>-0.0680768728536</td><td>1.681e-05</td></tr><tr><td>v2-interior se</td><td>0.694064749745</td><td>0.694064766628</td><td>7.941e-05</td></tr><tr><td>v2-interior tau2</td><td>0.817729328543</td><td>0.817729370021</td><td>9.177e-05</td></tr><tr><td>v2-interior ci_lb</td><td>-1.42841878522</td><td>-1.42841881838</td><td>0.0001528</td></tr><tr><td>v2-interior ci_ub</td><td>1.29226503966</td><td>1.29226507268</td><td>0.0001392</td></tr></tbody></table></div>
+</main></body></html>

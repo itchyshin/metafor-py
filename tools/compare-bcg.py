@@ -9,6 +9,8 @@ from pathlib import Path
 import shutil
 import subprocess
 
+from pairwise_report import write_report
+
 ROOT = Path(__file__).parents[1]
 parser = argparse.ArgumentParser(description=__doc__)
 parser.add_argument("--julia-root", type=Path, default=ROOT.parent / "Metafor.jl")
@@ -100,6 +102,7 @@ limits = {"yi": (1e-12, 1e-10), "vi": (1e-12, 1e-10),
           "QE": (2e-5, 1e-5), "I2": (2e-5, 1e-5), "H2": (2e-5, 1e-5),
           "covariance": (1e-12,1e-10), "design": (1e-12,1e-10)}
 errors = {key: [] for key in limits}
+pairwise = {"Python": [], "Julia": []}
 
 def seq(x):
     return x if isinstance(x, list) else [x]
@@ -114,6 +117,11 @@ def compare(field, ref, value, context, tolerance=None):
         if not error <= atol + rtol*abs(x):
             raise RuntimeError(f"{context}[{i}]: R={x:.16g}, port={y:.16g}, abs error={error:.3g}")
         errors[field].append(error)
+        language, _, label = context.partition(" ")
+        if language in pairwise:
+            if len(a) > 1:
+                label = f"{label} [{i + 1}]"
+            pairwise[language].append((label, x, y, atol + rtol * abs(x)))
 
 def reject_if_bad_coordinates(row, expected_row, expected_label):
     if int(row["row"]) != expected_row or row["label"] != expected_label:
@@ -211,7 +219,14 @@ for i, latitude in enumerate((0, 30, 60)):
 error_html = "".join(f"<tr><th>{k}</th><td>{max(v, default=0):.3g}</td></tr>" for k,v in sorted(errors.items()) if v)
 plots = "".join((ROOT / f"examples/bcg-forest{'-julia' if i else ''}.svg").read_text() for i in range(2))
 report = f'''<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width"><title>BCG parity across R, Python and Julia</title><style>body{{font:15px/1.45 system-ui;max-width:1120px;margin:2rem auto;padding:0 1rem;color:#172b3a}}table{{border-collapse:collapse;width:100%;margin:1rem 0 2rem}}th,td{{padding:.45rem;border-bottom:1px solid #ccd6dc;text-align:right}}th:first-child,td:nth-child(2){{text-align:left}}thead{{background:#eef4f5}}svg{{width:49%;height:auto;border:1px solid #d5dfe4}}code{{background:#eef4f5;padding:.1rem .3rem}}</style><h1>BCG parity across R, Python and Julia</h1><p>Each program reads the same 13-study raw-count fixture. This page is written after all effect sizes, model coefficients, standard errors, confidence intervals, heterogeneity statistics and moderator prediction intervals pass the field tolerances below.</p><p>Effect sizes: <code>1e-12 + 1e-10 × |R|</code>. Estimates, intervals and variance components: <code>2e-6 + 1e-5 × |R|</code>. Heterogeneity: <code>2e-5 + 1e-5 × |R|</code>.</p><h2>Effect sizes</h2><table><thead><tr><th>Row</th><th>R yi</th><th>Python yi</th><th>Julia yi</th><th>R vi</th><th>Python vi</th><th>Julia vi</th></tr></thead><tbody>{''.join(effects_html)}</tbody></table><h2>Models and heterogeneity</h2><table><thead><tr><th>Model</th><th>Quantity</th><th>R metafor 5.2-1</th><th>Python</th><th>Julia</th></tr></thead><tbody>{''.join(model_html)}</tbody></table><h2>Latitude predictions</h2><table><thead><tr><th>Latitude</th><th>Quantity</th><th>R</th><th>Python</th><th>Julia</th></tr></thead><tbody>{''.join(prediction_html)}</tbody></table><h2>Original forest plots</h2><p>Study points and confidence intervals are shown on the log-risk-ratio scale. The summary diamond shows the REML mean confidence interval; dashed limits show the new-study prediction interval.</p>{plots}<h2>Maximum absolute errors</h2><table><thead><tr><th>Field</th><th>Error</th></tr></thead><tbody>{error_html}</tbody></table><p>Data provenance and original teaching question: <a href="https://wviechtb.github.io/metadat/reference/dat.bcg.html">metadat BCG example</a>. This page uses original prose and plots and is a local artifact.</p></html>'''
-out = ROOT / "examples/bcg-comparison.html"
+for language, root in (("Python", ROOT), ("Julia", JULIA)):
+    write_report(root, "bcg", "BCG vaccine meta-analysis", language, pairwise[language],
+                 "The fixture covers 13 studies, effect sizes, model estimates, heterogeneity, "
+                 "design and coefficient covariance, moderator predictions, and forest coordinates. "
+                 "See reference/v1/PROVENANCE.md for the data and pinned reference.")
+
+out = ROOT / "examples/generated/bcg-comparison.html"
+out.parent.mkdir(parents=True, exist_ok=True)
 out.write_text(report, encoding="utf-8")
 print(f"BCG_THREE_LANGUAGE_HTML_VERIFIED {out}")
 print("COMPARATOR_FAILURE_CONTROLS_OK coefficient forest covariance-label permutation")

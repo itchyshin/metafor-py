@@ -10,7 +10,7 @@ Run the native Python example from the repository root:
 python examples/bcg.py --case=moderator
 ```
 
-The script reports the latitude coefficient, its interval, and predictions at 0°, 30°, and 60°. The <a href="../_static/comparisons/bcg-comparison.html">comparison page</a> checks the design matrix and coefficient labels as well as the estimates.
+The script reports the latitude coefficient, its interval, and predictions at 0°, 30°, and 60°. The [R and Python comparison guide](../compare) checks the design matrix and coefficient labels as well as the estimates.
 
 ## Data and provenance
 

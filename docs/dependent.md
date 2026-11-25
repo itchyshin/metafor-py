@@ -2,7 +2,7 @@
 
 Several estimates from one study can share sampling error, and outcomes from the same study can also share a study-level effect. Treating every row as independent can understate uncertainty. This tutorial asks how to fit those data when the sampling covariance is supplied.
 
-The example uses original synthetic fixtures, not the Berkey dataset. The rows and covariance matrices are shared with Metafor.jl and were generated with the pinned R reference script. Their versions, seeds, checksum, and terms are recorded in the source file `reference/dependent/v1/PROVENANCE.md`; the upstream [`rma.mv()` reference](https://wviechtb.github.io/metafor/reference/rma.mv.html) describes the corresponding R model family.
+The example uses original synthetic fixtures, not the Berkey dataset. The rows and covariance matrices were generated with the pinned R reference script. Their versions, seeds, checksum, and terms are recorded in `reference/dependent/v1/PROVENANCE.md`; the upstream [`rma.mv()` reference](https://wviechtb.github.io/metafor/reference/rma.mv.html) describes the corresponding R model family.
 
 ## Data
 
@@ -18,10 +18,10 @@ The first two fixtures store observations and matrices as CSV. The third is a sy
 
 For retained rows, let `V` be the supplied sampling covariance, `X` the fixed-effect design, and `K_j` a known positive-semidefinite random-effect kernel. The marginal covariance and fitted coefficients are
 
-\[
+$$
 C=V+\sum_j \theta_j K_j,\qquad
 \hat\beta=(X^T C^{-1}X)^{-1}X^T C^{-1}y,
-\]
+$$
 
 with each variance component `theta_j` constrained to be nonnegative. The nested example uses `K_study = Z_study Z_study'` and `K_effect = Z_effect Z_effect'`. The bivariate example estimates a positive-semidefinite 2 × 2 covariance matrix for the two outcomes within each study.
 
@@ -51,7 +51,7 @@ Install the project and optional table support with `pip install -e '.[tables]'`
 
 The shared synthetic R reference estimates the nested intercept at 0.6034 and its moderator slope at 0.2770. It estimates study and nested-effect variances of 0.1133 and 0.0221. In the two-outcome case, the estimated benefit and harm means are 0.4856 and 0.2422; the estimated between-outcome covariance is 0.2316. These numbers describe only the generated fixtures.
 
-The local comparison page places R, Python, and Julia estimates and coefficient covariance entries side by side. Run `python tools/compare-dependent.py` from the Python checkout, with Julia installed and the Julia checkout at `../Metafor.jl`; the command writes `examples/dependent-comparison.html`. The current gate compares 42 estimates and 12 coefficient-covariance entries against R, with quantity-specific tolerances. In the built site, open the <a href="_static/comparisons/dependent-comparison.html">dependent-effects comparison</a>.
+The comparison report places R and Python estimates and coefficient-covariance entries side by side. Its current gate checks 42 estimates and 12 coefficient-covariance entries against R with quantity-specific tolerances. See the [R and Python comparison guide](compare) for the report and its scope.
 
 ## Differences from R metafor
 

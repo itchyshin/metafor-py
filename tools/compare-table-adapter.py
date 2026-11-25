@@ -1,11 +1,13 @@
 """Check BCG table/formula adapters against the same native design matrix."""
 from argparse import ArgumentParser
 from html import escape
+import csv
 import math
 import os
 from pathlib import Path
-import shutil
 import subprocess
+
+from pairwise_report import write_report
 
 ROOT = Path(__file__).parents[1]
 parser = ArgumentParser(description=__doc__)
@@ -49,7 +51,7 @@ for language, result in outputs.items():
         raise RuntimeError(f"{language}: retained trial IDs changed: {result['row_ids']}")
     if result["design_shape"] != "12,2":
         raise RuntimeError(f"{language}: expected a 12 by 2 design, got {result['design_shape']}")
-    if float(result["matrix_max_abs_diff"]) > 1e-12:
+    if not 0 <= float(result["matrix_max_abs_diff"]) <= 1e-12:
         raise RuntimeError(f"{language}: formula and matrix fits differ by {result['matrix_max_abs_diff']}")
 
 if py["design_values"] != jl["design_values"]:
@@ -88,7 +90,40 @@ html = f"""<!doctype html>
 <p><a href="https://itchyshin.github.io/metafor-py/">Python tutorials</a> · <a href="https://itchyshin.github.io/Metafor.jl/">Julia tutorials</a></p>
 </html>
 """
-OUT = ROOT / "examples/table-adapter-comparison.html"
-OUT.write_text(html)
-shutil.copy2(OUT, JULIA_ROOT / "examples/table-adapter-comparison.html")
+fixture = ROOT / "reference/table-adapter/v1"
+with (fixture / "design.csv").open(newline="") as handle:
+    design = list(csv.DictReader(handle))
+with (fixture / "coefficients.csv").open(newline="") as handle:
+    coefficients = list(csv.DictReader(handle))
+expected_trials = ",".join(row["trial"] for row in design)
+expected_design = [float(row[term]) for row in design for term in ("intercept", "ablat")]
+expected_beta = [float(row["estimate"]) for row in coefficients]
+
+for language, root in (("Python", ROOT), ("Julia", JULIA_ROOT)):
+    result = outputs[language]
+    if result["row_ids"] != expected_trials:
+        raise RuntimeError(f"{language}: trial order disagrees with the R formula fit")
+    observed_design = [float(value) for value in result["design_values"].split(",")]
+    observed_beta = [float(value) for value in result["beta"].split(",")]
+    if len(observed_design) != len(expected_design) or len(observed_beta) != len(expected_beta):
+        raise RuntimeError(f"{language}: shape disagrees with the R formula fit")
+    rows = [(f"Trial {row['trial']} {term}", reference, observed, 1e-12)
+            for (row, term), reference, observed in zip(
+                ((row, term) for row in design for term in ("intercept", "ablat")),
+                expected_design, observed_design)]
+    rows.extend((row["term"], reference, observed, 1e-8)
+                for row, reference, observed in zip(coefficients, expected_beta, observed_beta))
+    for name, reference, observed, limit in rows:
+        if not abs(observed - reference) <= limit:
+            raise RuntimeError(f"{language}: {name} differs from R by more than {limit}")
+    matrix_difference = float(result["matrix_max_abs_diff"])
+    write_report(root, "table-adapter", "BCG formula adapter", language, rows,
+                 "Trial 4 has a missing latitude. The twelve retained trial IDs must match R "
+                 "in order. A separate native formula-to-matrix check found a maximum coefficient "
+                 f"difference of {matrix_difference:.3g}, with an allowed difference of 1e-12. "
+                 "See reference/table-adapter/v1/PROVENANCE.md.")
+
+OUT = ROOT / "examples/generated/table-adapter-comparison.html"
+OUT.parent.mkdir(parents=True, exist_ok=True)
+OUT.write_text(html, encoding="utf-8")
 print(f"TABLE_ADAPTER_PARITY_OK design_values=24 beta={len(py_beta)} max_abs_beta={max_beta_diff:.3g} artifact={OUT}")

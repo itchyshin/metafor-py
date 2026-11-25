@@ -9,6 +9,8 @@ import shutil
 import subprocess
 import sys
 
+from pairwise_report import write_report
+
 
 REPO = Path(__file__).resolve().parents[1]
 FIXTURE = REPO / "reference" / "dependent" / "v1"
@@ -91,7 +93,7 @@ def main():
         help="Metafor.jl checkout (default: sibling directory ../Metafor.jl)",
     )
     parser.add_argument(
-        "--output", type=Path, default=EXAMPLES / "dependent-comparison.html"
+        "--output", type=Path, default=EXAMPLES / "generated" / "dependent-comparison.html"
     )
     args = parser.parse_args()
     julia = shutil.which("julia")
@@ -159,6 +161,12 @@ code{{overflow-wrap:anywhere}}a{{color:#075caa}}
     print(f"Wrote {passed}/{total} passing comparisons to {args.output}")
     if passed != total:
         raise SystemExit(1)
+    for language, index, root in (("Python", 2, REPO), ("Julia", 3, julia_repo)):
+        rows = [(" / ".join(row[0]), row[1], row[index], row[5])
+                for row in estimates + covariances]
+        write_report(root, "dependent", "Dependent-effects models", language, rows,
+                     "Synthetic fixtures cover correlated sampling errors, nested random intercepts, "
+                     "and two outcomes. See reference/dependent/v1/PROVENANCE.md.")
 
 
 if __name__ == "__main__":

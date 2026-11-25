@@ -13,3 +13,4 @@ docs/_static/comparisons/
 .ignore
 /examples/bcg.jl
 /examples/phylogeny.jl
+docs/_static/bcg-forest.svg

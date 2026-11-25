@@ -4,6 +4,10 @@
 # metafor release pinned in PROVENANCE.md. No tutorial prose, figures, or
 # third-party datasets are copied into these fixtures.
 
+archive <- Sys.getenv("METAFOR_SOURCE_ARCHIVE")
+stopifnot(file.exists(archive),
+          digest::digest(archive, algo="sha256", file=TRUE) ==
+              "25c421cf52279294b11ab3166adfeb327dd22034a03a46487f081a19a163339b")
 suppressPackageStartupMessages(library(metafor))
 if (as.character(packageDescription("metafor")$Version) != "5.2-1") {
   stop("metafor 5.2-1 is required; see PROVENANCE.md")

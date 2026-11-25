@@ -10,7 +10,7 @@ Run the native example from the repository root:
 python examples/dependent.py --case=nested
 ```
 
-The script fits a REML model with study and nested-effect variance components. Its estimates and coefficient covariance appear in the <a href="../_static/comparisons/dependent-comparison.html">three-language comparison</a>.
+The script fits a REML model with study and nested-effect variance components. Its estimates and coefficient covariance appear in the [R and Python comparison guide](../compare).
 
 ## Interpretation
 

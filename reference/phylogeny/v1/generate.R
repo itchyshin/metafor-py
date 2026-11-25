@@ -1,4 +1,9 @@
+archive <- Sys.getenv("METAFOR_SOURCE_ARCHIVE")
+stopifnot(file.exists(archive),
+          digest::digest(archive, algo="sha256", file=TRUE) ==
+              "25c421cf52279294b11ab3166adfeb327dd22034a03a46487f081a19a163339b")
 suppressPackageStartupMessages(library(metafor))
+stopifnot(as.character(packageVersion("metafor")) == "5.2.1")
 # Three species with a labelled correlation matrix and repeated observations.
 A <- matrix(c(1,.6,.2,.6,1,.3,.2,.3,1),3,3,
             dimnames=list(c('sp_a','sp_b','sp_c'),c('sp_a','sp_b','sp_c')))

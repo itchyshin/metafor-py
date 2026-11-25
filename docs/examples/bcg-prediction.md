@@ -10,7 +10,7 @@ Run the native example from the repository root:
 python examples/bcg.py --case=prediction
 ```
 
-The generated JSON contains predictions, standard errors, confidence limits, and prediction limits. The <a href="../_static/comparisons/bcg-comparison.html">three-language comparison</a> compares every prediction field against the pinned reference.
+The generated JSON contains predictions, standard errors, confidence limits, and prediction limits. The [R and Python comparison guide](../compare) compares every prediction field against the pinned reference.
 
 ## Interpretation
 

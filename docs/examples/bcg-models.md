@@ -10,7 +10,7 @@ Run the native example from the repository root:
 python examples/bcg.py --case=models
 ```
 
-The output labels the `fixed` and `random` fits and reports coefficients, standard errors, heterogeneity, and intervals. The <a href="../_static/comparisons/bcg-comparison.html">comparison page</a> shows each result from R, Python, and Julia with quantity-specific tolerances.
+The output labels the `fixed` and `random` fits and reports coefficients, standard errors, heterogeneity, and intervals. The [R and Python comparison guide](../compare) shows each result from R and Python with quantity-specific tolerances.
 
 ## Interpretation
 

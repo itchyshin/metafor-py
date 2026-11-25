@@ -6,7 +6,7 @@ from pathlib import Path
 import subprocess
 import csv
 import math
-import shutil
+from pairwise_report import write_report
 
 ROOT = Path(__file__).parents[1]
 parser = argparse.ArgumentParser(description=__doc__)
@@ -99,8 +99,18 @@ for row in matrix[1:]:
 matrix_table = "<table class=matrix><thead><tr><th>Species</th>" + "".join(f"<th>{escape(label)}</th>" for label in labels) + "</tr></thead><tbody>" + "".join(matrix_rows) + "</tbody></table>"
 
 html = """<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width"><title>Phylogenetic parity</title><style>body{font:16px/1.55 system-ui,sans-serif;max-width:960px;margin:2rem auto;padding:0 1rem;color:#172b3a}table{border-collapse:collapse;width:100%;margin:1rem 0}th,td{padding:.5rem;border-bottom:1px solid #ccd6dc;text-align:right}th:first-child,td:nth-child(2){text-align:left}thead{background:#eef4f5}svg{width:100%;height:auto;background:#fbfcfd;border:1px solid #d6dfe7;border-radius:8px}.matrix{max-width:480px}.matrix td,.matrix th{text-align:center}.matrix td{font-variant-numeric:tabular-nums}</style><h1>Supplied-correlation phylogenetic fits</h1><p>Both ports and the pinned R reference fit a species random intercept with a supplied labelled correlation matrix and diagonal sampling variances. The first fixture estimates a boundary variance; the second estimates an interior species variance. The inputs and R references are synthetic and versioned beside each fixture.</p><p>Tolerance for every displayed quantity: 1e-5 + 1e-4 × |R|.</p><h2>Coefficient estimates and intervals</h2>""" + plot + """<h2>Supplied species correlation</h2><p>The same labelled matrix is used in both synthetic cases. Cell shading increases with correlation.</p>""" + matrix_table + """<h2>Numerical comparison</h2><table><thead><tr><th>Fixture</th><th>Quantity</th><th>R metafor 5.2-1</th><th>Python</th><th>Julia</th></tr></thead><tbody>""" + "".join(rows) + """</tbody></table><p>Fixture provenance and generation scripts are in <code>reference/phylogeny/v1</code> and <code>reference/phylogeny/v2-interior</code>. Open the <a href="https://itchyshin.github.io/metafor-py/">Python tutorials</a> or <a href="https://itchyshin.github.io/Metafor.jl/">Julia tutorials</a>. These results demonstrate fixture-level numerical agreement and do not estimate a tree or claim a biological effect.</p></html>"""
-out = ROOT / "examples/phylogeny-comparison.html"
+for language, root in (("Python", ROOT), ("Julia", JULIA)):
+    values = []
+    for case in ("v1", "v2-interior"):
+        for field, (atol, rtol) in limits.items():
+            ref = fits["R"][case][field]
+            values.append((f"{case} {field}", ref, fits[language][case][field], atol + rtol * abs(ref)))
+    write_report(root, "phylogeny", "Supplied phylogenetic correlation", language, values,
+                 "The synthetic fixtures exercise a zero-variance boundary and an interior solution "
+                 "using a supplied labelled correlation matrix. See reference/phylogeny.")
+
+out = ROOT / "examples/generated/phylogeny-comparison.html"
+out.parent.mkdir(parents=True, exist_ok=True)
 out.write_text(html, encoding="utf-8")
-shutil.copy2(out, JULIA / "examples/phylogeny-comparison.html")
 print(f"PHYLOGENY_THREE_LANGUAGE_HTML_VERIFIED {out}")
 print(f"MAX_ABS_ERRORS {errors}")

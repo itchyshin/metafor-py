@@ -12,7 +12,7 @@ Run the native Python example from the repository root:
 python examples/bcg.py --case=effects
 ```
 
-The script reads the raw counts from the versioned fixture, computes every study effect, and writes the results for comparison with R and Julia. The <a href="../_static/comparisons/bcg-comparison.html">Open the local comparison page</a> reports differences by output and tolerance.
+The script reads the raw counts from the versioned fixture, computes every study effect, and writes the results for comparison with the pinned R reference. The [R and Python comparison guide](../compare) reports differences by output and tolerance.
 
 ## Interpretation
 

@@ -15,3 +15,25 @@ a:hover { color: #a64b26; }
 table.docutils { border-color: var(--mf-line); }
 table.docutils th { background: var(--mf-soft); color: var(--mf-ink); }
 blockquote { border-left: 4px solid var(--mf-accent); padding-left: 1em; }
+.mf-forest-figure { margin: 1.5rem 0; }
+.mf-forest-plot { display: block; width: 100%; height: auto; }
+.mf-forest-figure figcaption { color: #52646a; font-size: 0.9rem; margin-top: 0.4rem; }
+
+/* Keep wide display equations inside their own scroll area on narrow screens. */
+mjx-container[display="true"] {
+  display: block;
+  max-width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding-bottom: 0.25rem;
+}
+
+mjx-container:not([display="true"]) { max-width: 100%; }
+
+@media (max-width: 768px) {
+  .wy-nav-content { min-width: 0; }
+  .wy-nav-content-wrap { overflow-x: hidden; }
+  .wy-nav-content-wrap .wy-nav-content { overflow-wrap: anywhere; }
+  pre { max-width: 100%; overflow-x: auto; }
+  table.docutils { display: block; max-width: 100%; overflow-x: auto; }
+}
