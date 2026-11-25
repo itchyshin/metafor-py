@@ -77,7 +77,7 @@
 <p><code class="docutils literal notranslate"><span class="pre">metafor-py</span></code> is an experimental Python port of selected methods from Wolfgang Viechtbauer’s R package <a class="reference external" href="https://www.metafor-project.org/">metafor</a>. It is a separate implementation, not the R package or a complete replacement. The compatibility table records the scope by function and option.</p>
 <p>The project follows the R package’s question-to-analysis path: calculate study effects, fit a model, interpret uncertainty, and inspect plots. Its core uses native Python arrays and structured results; optional table inputs use pandas and Patsy.</p>
 <p>The tutorials below use pinned R reference inputs shared with Metafor.jl. The wording and plots are original. Local comparison pages show R, Python, and Julia estimates side by side.</p>
-<p>Start with the <a class="reference external" href="examples/bcg-effects.html">BCG effect-size tutorial</a>, then follow 20 focused topic pages from model fitting and meta-regression through intervals and forest-plot data. Continue with correlated effects, nested effects, two outcomes, and the supplied-correlation phylogenetic cases. Each page includes a runnable command and interpretation.</p>
+<p>Start with the <a class="reference external" href="examples/bcg-effects.html">BCG effect-size tutorial</a>, then follow 21 focused topic pages from model fitting and meta-regression through intervals and forest-plot data. Continue with correlated effects, nested effects, two outcomes, and the supplied-correlation phylogenetic cases. Each page includes a runnable command and interpretation.</p>
 <p>To try the package from a checkout, run <code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">-m</span> <span class="pre">pip</span> <span class="pre">install</span> <span class="pre">-e</span> <span class="pre">'.[tables]'</span></code> from the repository root. The core examples need Python and NumPy; the table and formula adapter uses optional pandas and Patsy dependencies.</p>
 <section id="choose-a-starting-point">
 <h2>Choose a starting point<a class="headerlink" href="#choose-a-starting-point" title="Link to this heading"></a></h2>
@@ -85,8 +85,9 @@
 <li><p>To analyze two-group counts, start with <a class="reference external" href="examples/bcg-effects.html">BCG effect sizes</a>.</p></li>
 <li><p>To model dependent outcomes, see <a class="reference external" href="examples/dependent-gls.html">correlated sampling errors</a>.</p></li>
 <li><p>To use a species correlation matrix, see the <a class="reference external" href="examples/phylogeny.html">phylogenetic model</a>.</p></li>
+<li><p>To check formula and matrix rows, see the <a class="reference external" href="examples/table-adapter.html">table adapter</a>.</p></li>
 </ul>
-<p>Compare all three implementations: <a class="reference external" href="_static/comparisons/bcg-comparison.html">BCG</a>, <a class="reference external" href="_static/comparisons/dependent-comparison.html">dependent effects</a>, <a class="reference external" href="_static/comparisons/phylogeny-comparison.html">phylogenetic models</a>, and <a class="reference external" href="_static/comparisons/effect-size-comparison.html">effect sizes</a>. See also the <a class="reference external" href="https://itchyshin.github.io/Metafor.jl/">Metafor.jl documentation</a> and <a class="reference external" href="https://github.com/itchyshin/Metafor.jl">Julia source repository</a>.</p>
+<p>Compare R, Python, and Julia for the <a class="reference external" href="_static/comparisons/bcg-comparison.html">BCG model</a>, <a class="reference external" href="_static/comparisons/dependent-comparison.html">dependent effects</a>, <a class="reference external" href="_static/comparisons/phylogeny-comparison.html">phylogenetic models</a>, and <a class="reference external" href="_static/comparisons/effect-size-comparison.html">effect sizes</a>. A separate <a class="reference external" href="_static/comparisons/table-adapter-comparison.html">table-adapter comparison</a> checks Python and Julia row alignment and numeric design matrices. See also the <a class="reference external" href="https://itchyshin.github.io/Metafor.jl/">Metafor.jl documentation</a> and <a class="reference external" href="https://github.com/itchyshin/Metafor.jl">Julia source repository</a>.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>This is an experimental, unreleased port. A passing example establishes parity only for its named fixture, options, and outputs.</p>
@@ -137,6 +138,7 @@
 <li class="toctree-l2"><a class="reference internal" href="examples/effect-scale.html">Choosing an effect scale</a></li>
 <li class="toctree-l2"><a class="reference internal" href="examples/zero-cell-policies.html">Zero-cell correction policies</a></li>
 <li class="toctree-l2"><a class="reference internal" href="examples/missing-rows.html">Missing observations and row identity</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples/table-adapter.html">Turning a formula into a checked design matrix</a></li>
 <li class="toctree-l2"><a class="reference internal" href="examples/odds-ratio-models.html">Pooling log odds ratios</a></li>
 <li class="toctree-l2"><a class="reference internal" href="examples/risk-difference-models.html">Pooling risk differences</a></li>
 <li class="toctree-l2"><a class="reference internal" href="examples/phylo-boundary.html">Phylogenetic model at the zero boundary</a></li>
