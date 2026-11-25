@@ -24,6 +24,7 @@ Omit `--case` from the BCG or dependent command to regenerate the complete compa
 | [Choosing a scale](effect-scale.md) | Why do effect magnitudes differ by scale? | `python examples/effect-sizes.py --case=scale` | [R, Python, Julia](../_static/comparisons/effect-size-comparison.html) |
 | [Zero-cell policies](zero-cell-policies.md) | How do correction choices change results? | `python examples/effect-sizes.py --case=zero-correction` | [R, Python, Julia](../_static/comparisons/effect-size-comparison.html) |
 | [Missing observations](missing-rows.md) | Are incomplete studies kept aligned? | `python -m pytest tests/test_effect_sizes.py -k missing` | [R, Python, Julia](../_static/comparisons/effect-size-comparison.html) |
+| [Table and formula adapter](table-adapter.md) | Does a missing moderator row stay aligned across inputs? | `python examples/bcg.py --case=table-adapter` | [Python, Julia](../_static/comparisons/table-adapter-comparison.html) |
 | [Pooling log odds ratios](odds-ratio-models.md) | How do FE and REML summaries differ? | `python examples/effect-sizes.py --case=odds-ratio` | [R, Python, Julia](../_static/comparisons/effect-size-comparison.html) |
 | [Pooling risk differences](risk-difference-models.md) | How does heterogeneity look on an absolute scale? | `python examples/effect-sizes.py --case=risk-difference` | [R, Python, Julia](../_static/comparisons/effect-size-comparison.html) |
 | [Phylogenetic boundary](phylo-boundary.md) | What does a zero variance boundary mean? | `python examples/phylogeny.py --case=boundary` | [R, Python, Julia](../_static/comparisons/phylogeny-comparison.html) |
@@ -47,6 +48,7 @@ risk-difference
 effect-scale
 zero-cell-policies
 missing-rows
+table-adapter
 odds-ratio-models
 risk-difference-models
 phylo-boundary

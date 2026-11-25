@@ -10,7 +10,7 @@ The project follows the teaching and analysis structure of the R package: calcul
 
 ## Start with the tutorials
 
-The [documentation site](https://itchyshin.github.io/metafor-py/) contains 20 topic-focused tutorials and a differences guide. Start with the [BCG example](https://itchyshin.github.io/metafor-py/examples/bcg-effects.html), then explore fixed and random effects, meta-regression, predictions, forest data, correlated effects, nested effects, a two-outcome model, and phylogenetic boundary and interior fits.
+The [documentation site](https://itchyshin.github.io/metafor-py/) contains 21 topic-focused tutorials and a differences guide. Start with the [BCG example](https://itchyshin.github.io/metafor-py/examples/bcg-effects.html), then explore fixed and random effects, meta-regression, predictions, forest data, correlated effects, nested effects, a two-outcome model, phylogenetic boundary and interior fits, and table/formula adapter checks.
 
 ```sh
 python -m pip install -e '.[test,docs,tables]'
@@ -21,7 +21,7 @@ python examples/phylogeny.py
 
 The tutorial overview lists the focused `--case` commands. Running these scripts without a selector rebuilds each complete comparison result.
 
-The [three-language BCG comparison](https://itchyshin.github.io/metafor-py/_static/comparisons/bcg-comparison.html), [dependent-effects comparison](https://itchyshin.github.io/metafor-py/_static/comparisons/dependent-comparison.html), and [phylogenetic comparison](https://itchyshin.github.io/metafor-py/_static/comparisons/phylogeny-comparison.html), and [effect-size comparison](https://itchyshin.github.io/metafor-py/_static/comparisons/effect-size-comparison.html) place R metafor 5.2-1, Python, and Julia results side by side. The plots and comparison pages are original. Fixture provenance and checksums live under [`reference/`](reference/).
+The [BCG comparison](https://itchyshin.github.io/metafor-py/_static/comparisons/bcg-comparison.html), [dependent-effects comparison](https://itchyshin.github.io/metafor-py/_static/comparisons/dependent-comparison.html), [phylogenetic comparison](https://itchyshin.github.io/metafor-py/_static/comparisons/phylogeny-comparison.html), [effect-size comparison](https://itchyshin.github.io/metafor-py/_static/comparisons/effect-size-comparison.html), and [table-adapter comparison](https://itchyshin.github.io/metafor-py/_static/comparisons/table-adapter-comparison.html) show results across the supported fixtures. Fixture provenance and checksums live under [`reference/`](reference/).
 
 GitHub Actions checks documentation builds from `main`. GitHub Pages serves the static site from the `gh-pages` branch; the source tutorials and package code remain on `main`.
 

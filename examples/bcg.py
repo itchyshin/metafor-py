@@ -15,7 +15,7 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument(
         "--case",
-        choices=("all", "effects", "models", "moderator", "prediction", "forest"),
+        choices=("all", "effects", "models", "moderator", "prediction", "forest", "table-adapter"),
         default="all",
     )
     case = parser.parse_args().case
@@ -25,6 +25,29 @@ def main():
     count = lambda name: np.array([float(row[name]) for row in rows])
     yi, vi = escalc_rr(count("tpos"), count("tneg"), count("cpos"), count("cneg"))
     latitude = count("ablat")
+    if case == "table-adapter":
+        import pandas as pd
+        from metafor import fit_meta_formula
+
+        trials = np.array([int(row["trial"]) for row in rows])
+        table = pd.DataFrame({"yi": yi, "vi": vi, "ablat": latitude}, index=trials)
+        table.loc[trials[3], "ablat"] = np.nan
+        formula_fit = fit_meta_formula(table, "yi ~ 1 + ablat")
+        keep = np.isfinite(table["ablat"].to_numpy())
+        design = np.column_stack([np.ones(keep.sum()), table.loc[keep, "ablat"].to_numpy()])
+        matrix_fit = fit_meta(yi[keep], vi[keep], design)
+        max_diff = float(np.max(np.abs(formula_fit.result.beta - matrix_fit.beta)))
+        if formula_fit.row_index != tuple(trials[keep]) or max_diff > 1e-12:
+            raise RuntimeError("table adapter changed row identity or disagreed with matrix input")
+        fmt = lambda values: ",".join(f"{float(value):.16g}" for value in np.atleast_1d(values))
+        print(f"TABLE_ADAPTER|design_columns|{','.join(formula_fit.design_columns)}")
+        print(f"TABLE_ADAPTER|row_ids|{','.join(str(x) for x in formula_fit.row_index)}")
+        print(f"TABLE_ADAPTER|design_shape|{design.shape[0]},{design.shape[1]}")
+        print(f"TABLE_ADAPTER|design_values|{fmt(design.ravel())}")
+        print(f"TABLE_ADAPTER|beta|{fmt(formula_fit.result.beta)}")
+        print(f"TABLE_ADAPTER|matrix_max_abs_diff|{max_diff:.16g}")
+        print("TABLE_ADAPTER_OK")
+        return
     designs = {
         "fixed": np.ones((len(yi), 1)),
         "random": np.ones((len(yi), 1)),

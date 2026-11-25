@@ -272,3 +272,26 @@ def test_formula_adapter_maps_nonfinite_response_back_to_original_rows():
     fitted = fit_meta_formula(table, "yi ~ x", method="FE")
     assert fitted.row_index == (11, 13, 14)
     assert fitted.result.row_indices == (0, 2, 3)
+
+
+@pytest.mark.bcg_adapters
+def test_table_adapter_example_emits_rows_and_matrix_parity():
+    import subprocess
+    import sys
+
+    completed = subprocess.run(
+        [sys.executable, str(ROOT / "examples/bcg.py"), "--case=table-adapter"],
+        cwd=ROOT, text=True, capture_output=True, check=True,
+    )
+    assert "TABLE_ADAPTER|design_columns|Intercept,ablat" in completed.stdout
+    assert "TABLE_ADAPTER|row_ids|1,2,3,5,6,7,8,9,10,11,12,13" in completed.stdout
+    assert "TABLE_ADAPTER|design_shape|12,2" in completed.stdout
+    design_line = next(x for x in completed.stdout.splitlines()
+                       if x.startswith("TABLE_ADAPTER|design_values|"))
+    design_values = np.array([float(x) for x in design_line.rsplit("|", 1)[1].split(",")])
+    keep = np.arange(len(DATA)) != 3
+    expected_design = np.column_stack([np.ones(keep.sum()), DATA["ablat"][keep]]).ravel()
+    np.testing.assert_allclose(design_values, expected_design, rtol=0, atol=1e-12)
+    line = next(x for x in completed.stdout.splitlines()
+                if x.startswith("TABLE_ADAPTER|matrix_max_abs_diff|"))
+    assert float(line.rsplit("|", 1)[1]) <= 1e-12

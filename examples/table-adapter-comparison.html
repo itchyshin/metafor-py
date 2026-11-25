@@ -1,0 +1,17 @@
+<!doctype html>
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width">
+<title>BCG formula adapter parity</title>
+<style>body{font:16px/1.55 system-ui,sans-serif;max-width:900px;margin:3rem auto;padding:0 1rem;color:#18304a}table{border-collapse:collapse}th,td{padding:.55rem 1rem;border:1px solid #ccd5df;text-align:left}.ok{color:#14723a;font-weight:700}</style>
+<h1>Formula adapters preserve the BCG design</h1>
+<p>The Python/Patsy and Julia/StatsModels adapters fit the same BCG log risk ratios with latitude as a moderator. Trial 4 has a missing latitude in this example.</p>
+<p class="ok">PASS: both adapters retain the same 12 trials, produce the same 12 × 2 numeric design, and match their matrix fits within 1e-12.</p>
+<table><thead><tr><th>Check</th><th>Python</th><th>Julia</th></tr></thead><tbody>
+<tr><th>Retained trial IDs</th><td>1,2,3,5,6,7,8,9,10,11,12,13</td><td>1,2,3,5,6,7,8,9,10,11,12,13</td></tr>
+<tr><th>Design shape</th><td>12,2</td><td>12,2</td></tr>
+<tr><th>Design columns</th><td>Intercept,ablat</td><td>(Intercept),ablat</td></tr>
+<tr><th>Formula estimates</th><td>0.1825060943823962,-0.02602180731995789</td><td>0.1825060943823973,-0.02602180731995792</td></tr>
+<tr><th>Largest cross-language coefficient difference</th><td colspan="2">1.08e-15 (allowed: 1e-8 absolute or relative)</td></tr>
+</tbody></table>
+<p>The intercept column label follows each language's formula package. The numeric design and estimate ordering are compared directly. This fixture does not establish complete R formula compatibility.</p>
+<p><a href="https://itchyshin.github.io/metafor-py/">Python tutorials</a> · <a href="https://itchyshin.github.io/Metafor.jl/">Julia tutorials</a></p>
+</html>
