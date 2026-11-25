@@ -1,19 +1,51 @@
 # metafor-py
 
-A native Python implementation of selected methods from Wolfgang Viechtbauer's R package metafor. The first runnable example is the BCG vaccine meta-analysis.
+**Native Python methods inspired by the R package [`metafor`](https://www.metafor-project.org/).**
 
-## Run the BCG example
+**Tutorials and examples:** [metafor-py documentation](https://itchyshin.github.io/metafor-py/) · [source repository](https://github.com/itchyshin/metafor-py)
 
-Install the project and run `python examples/bcg.py`. The example reads the shared raw-count fixture, computes log risk ratios, fits fixed-effect and REML models, fits a latitude moderator, calculates mean and new-study intervals, and writes numeric results plus forest data and an SVG plot under `examples/`.
+`metafor-py` is an experimental, independently developed Python port of selected meta-analysis methods. It is not the R package and does not yet reproduce its full API. The [compatibility table](COMPATIBILITY.md) records what is verified, partial, unsupported, or intentionally different.
 
-The reference values were regenerated with R metafor 5.2-1. The original data and tutorial are credited at https://wviechtb.github.io/metadat/reference/dat.bcg.html. This repository is experimental and covers only the functions and options listed in `COMPATIBILITY.md`.
+The project follows the teaching and analysis structure of the R package: calculate study effects, fit models, interpret uncertainty, and inspect plots. Each port uses native Python arrays and structured results in its core, with optional pandas/Patsy adapters.
 
-## Three-language comparison pages
+## Start with the tutorials
 
-Open [`examples/bcg-comparison.html`](examples/bcg-comparison.html) for the R, Python and Julia BCG results and forest plots. Open [`examples/phylogeny-comparison.html`](examples/phylogeny-comparison.html) for the supplied-correlation phylogeny fits. Regenerate both pages with `python tools/compare-bcg.py --julia-root /path/to/Metafor.jl` and `python tools/compare-phylogeny.py --julia-root /path/to/Metafor.jl`.
+The [documentation site](https://itchyshin.github.io/metafor-py/) contains ten runnable analysis stages with paired tutorials, plus a differences guide. Start with the [BCG example](https://itchyshin.github.io/metafor-py/examples/bcg-effects.html), then explore fixed and random effects, meta-regression, predictions, forest data, correlated effects, nested effects, a two-outcome model, and phylogenetic boundary and interior fits.
 
-The intended maintainers are Shinichi Nakagawa, Yefeng Yang, and Wolfgang Viechtbauer. This records the project’s intended team; it does not imply that any person has accepted a role.
+```sh
+python -m pip install -e '.[test,docs,tables]'
+python examples/bcg.py
+python examples/dependent.py
+python examples/phylogeny.py
+```
 
-## Differences from R metafor
+The tutorial overview lists the focused `--case` commands. Running these scripts without a selector rebuilds each complete comparison result.
 
-This is an early native port. It includes matrix-first univariate models, an optional pandas/Patsy formula adapter, forest plot data, and an initial supplied-correlation phylogenetic example. It does not implement the full metafor formula semantics, all effect-size measures, small-sample inference choices, or the broader multivariate model families. See `COMPATIBILITY.md` for the current scope.
+The [three-language BCG comparison](https://itchyshin.github.io/metafor-py/_static/comparisons/bcg-comparison.html), [dependent-effects comparison](https://itchyshin.github.io/metafor-py/_static/comparisons/dependent-comparison.html), and [phylogenetic comparison](https://itchyshin.github.io/metafor-py/_static/comparisons/phylogeny-comparison.html) place R metafor 5.2-1, Python, and Julia results side by side. The plots and comparison pages are original. Fixture provenance and checksums live under [`reference/`](reference/).
+
+Build the documentation locally:
+
+```sh
+python -m sphinx -W --keep-going -b html docs docs/_build/html
+```
+
+Open `docs/_build/html/index.html` after the build. The [GitHub Pages workflow](.github/workflows/pages.yml) builds this documentation from the repository and deploys it from `main`.
+
+## What the project covers
+
+- Log risk ratios from 2×2 study counts, fixed-effect and REML models, and a latitude moderator.
+- Mean and prediction intervals, row-aligned forest data, and an original SVG plot.
+- Supplied sampling covariance matrices, nested scalar random effects, two-outcome covariance, and a supplied phylogenetic correlation matrix.
+- Versioned R reference fixtures used for parity checks. The ports run without R.
+
+These methods cover a small part of the R package. See [`COMPATIBILITY.md`](COMPATIBILITY.md) before relying on a function or option. Do not infer support from the package name or from one passing example.
+
+## Relationship to R `metafor`
+
+The upstream R package was written by Wolfgang Viechtbauer and provides a much broader collection of meta-analysis methods. This repository credits and links to the [official project site](https://www.metafor-project.org/), [R documentation](https://wviechtb.github.io/metafor/), and the [BCG dataset documentation](https://wviechtb.github.io/metadat/reference/dat.bcg.html). The tutorial pages use original prose and distinguish synthetic fixtures from published data. GPL notices are retained where derivative code or data require them.
+
+Project-intended maintainers: Shinichi Nakagawa, Yefeng Yang, and Wolfgang Viechtbauer. This records the project's intended team and does not imply that anyone has accepted a role.
+
+## License and status
+
+This repository is experimental and unreleased. The source is licensed under GPL-2.0-or-later; see [`LICENSE`](LICENSE) and each fixture's provenance record for data terms. The documentation site is published from `main`; no package release has been made.

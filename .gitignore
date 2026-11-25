@@ -6,6 +6,8 @@ __pycache__/
 *.py[cod]
 *.egg-info/
 docs/_build/
+examples/generated/
+docs/_static/comparisons/
 .unlazy/
 .DS_Store
 .ignore

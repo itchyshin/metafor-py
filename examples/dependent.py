@@ -107,6 +107,7 @@ def run():
 def write_csv(path, header, rows):
     path = Path(path)
     path.parent.mkdir(parents=True, exist_ok=True)
+    path.parent.mkdir(parents=True, exist_ok=True)
     with path.open("w", newline="") as stream:
         writer = csv.writer(stream)
         writer.writerow(header)
@@ -115,14 +116,28 @@ def write_csv(path, header, rows):
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument("--output", default=str(Path(__file__).with_name("dependent-python-results.csv")))
-    parser.add_argument("--covariance-output", default=str(Path(__file__).with_name("dependent-python-covariance.csv")))
+    parser.add_argument("--case", choices=("all", "gls", "nested", "bivariate"), default="all")
+    parser.add_argument("--output")
+    parser.add_argument("--covariance-output")
     args = parser.parse_args()
+    result_stem = "dependent-python-results" if args.case == "all" else f"dependent-python-{args.case}-results"
+    covariance_stem = "dependent-python-covariance" if args.case == "all" else f"dependent-python-{args.case}-covariance"
+    if args.case == "all":
+        result_dir = Path(__file__).parent
+    else:
+        result_dir = Path(__file__).parent / "generated" / "dependent"
+    output = args.output or str(result_dir / (result_stem + ".csv"))
+    covariance_output = args.covariance_output or str(result_dir / (covariance_stem + ".csv"))
     estimates, covariances = run()
-    write_csv(args.output, ("model", "quantity", "name", "estimate"), estimates)
-    write_csv(args.covariance_output, ("model", "row", "column", "estimate"), covariances)
-    print(f"Wrote {len(estimates)} R-comparable estimates to {args.output}")
-    print(f"Wrote {len(covariances)} coefficient-covariance entries to {args.covariance_output}")
+    model_for_case = {"gls": "correlated-gls", "nested": "nested-reml", "bivariate": "berkey-un"}
+    if args.case != "all":
+        selected = model_for_case[args.case]
+        estimates = [row for row in estimates if row[0] == selected]
+        covariances = [row for row in covariances if row[0] == selected]
+    write_csv(output, ("model", "quantity", "name", "estimate"), estimates)
+    write_csv(covariance_output, ("model", "row", "column", "estimate"), covariances)
+    print(f"Wrote {len(estimates)} R-comparable estimates to {output}")
+    print(f"Wrote {len(covariances)} coefficient-covariance entries to {covariance_output}")
 
 
 if __name__ == "__main__":

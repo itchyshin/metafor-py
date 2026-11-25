@@ -7,7 +7,7 @@ Scope: verify the native Python port, its Julia/R parity examples, references, a
 - [x] G1: Python package suite passes
   CHECK: OPENBLAS_NUM_THREADS=1 ./.unlazy/clean-python/bin/python -m pytest -q
   EXPECT: 37 passed
-  EVIDENCE: exit=0; shell=/bin/sh; cwd=/Users/z3437171/Dropbox/Github Local/metafor-py; path=b12a711c1484/40 entries; output=-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html | 37 passed, 3 warnings in 32.77s
+  EVIDENCE: exit=0; shell=/bin/sh; cwd=/Users/z3437171/Dropbox/Github Local/metafor-py; path=b12a711c1484/40 entries; output=-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html | 37 passed, 3 warnings in 3.26s
 
 - [x] G2: Python tutorial builds with warnings treated as errors
   CHECK: OPENBLAS_NUM_THREADS=1 ./.venv/bin/python -m sphinx -W --keep-going -b html docs docs/_build/html
@@ -33,3 +33,13 @@ Scope: verify the native Python port, its Julia/R parity examples, references, a
   CHECK: cd reference/dependent/v1 && shasum -c SHA256SUMS && echo FIXTURE_CHECKSUMS_OK
   EXPECT: FIXTURE_CHECKSUMS_OK
   EVIDENCE: exit=0; shell=/bin/sh; cwd=/Users/z3437171/Dropbox/Github Local/metafor-py; path=b12a711c1484/40 entries; output=warnings.csv: OK | FIXTURE_CHECKSUMS_OK
+
+- [x] G7: ten tutorial pages build and the comparison pages are linked into the generated Python site
+  CHECK: python3 -c "from pathlib import Path; p=Path('docs/_build/html/examples'); names=['bcg-effects.html','bcg-models.html','bcg-moderator.html','bcg-prediction.html','bcg-forest.html','dependent-gls.html','dependent-nested.html','dependent-bivariate.html','phylogeny.html','differences.html']; c=Path('docs/_build/html/_static/comparisons'); assert all((p/n).is_file() for n in names); assert all((c/n).is_file() for n in ['bcg-comparison.html','dependent-comparison.html','phylogeny-comparison.html']); print('PYTHON_TUTORIALS_AND_COMPARISONS_OK')"
+  EXPECT: PYTHON_TUTORIALS_AND_COMPARISONS_OK
+  EVIDENCE: exit=0; shell=/bin/sh; cwd=/Users/z3437171/Dropbox/Github Local/metafor-py; path=b12a711c1484/40 entries; output=PYTHON_TUTORIALS_AND_COMPARISONS_OK
+
+- [x] G8: the Python GitHub Pages workflow parses as YAML
+  CHECK: ruby -e 'require "yaml"; YAML.load_file(".github/workflows/pages.yml"); puts "PAGES_WORKFLOW_YAML_OK"'
+  EXPECT: PAGES_WORKFLOW_YAML_OK
+  EVIDENCE: exit=0; shell=/bin/sh; cwd=/Users/z3437171/Dropbox/Github Local/metafor-py; path=b12a711c1484/40 entries; output=PAGES_WORKFLOW_YAML_OK

@@ -51,7 +51,7 @@ Install the project and optional table support with `pip install -e '.[tables]'`
 
 The shared synthetic R reference estimates the nested intercept at 0.6034 and its moderator slope at 0.2770. It estimates study and nested-effect variances of 0.1133 and 0.0221. In the two-outcome case, the estimated benefit and harm means are 0.4856 and 0.2422; the estimated between-outcome covariance is 0.2316. These numbers describe only the generated fixtures.
 
-The local comparison page places R, Python, and Julia estimates and coefficient covariance entries side by side. Run `python tools/compare-dependent.py` from the Python checkout, with Julia installed and the Julia checkout at `../Metafor.jl`; the command writes `examples/dependent-comparison.html`. The current gate compares 42 estimates and 12 coefficient-covariance entries against R, with quantity-specific tolerances.
+The local comparison page places R, Python, and Julia estimates and coefficient covariance entries side by side. Run `python tools/compare-dependent.py` from the Python checkout, with Julia installed and the Julia checkout at `../Metafor.jl`; the command writes `examples/dependent-comparison.html`. The current gate compares 42 estimates and 12 coefficient-covariance entries against R, with quantity-specific tolerances. In the built site, open the <a href="_static/comparisons/dependent-comparison.html">dependent-effects comparison</a>.
 
 ## Differences from R metafor
 

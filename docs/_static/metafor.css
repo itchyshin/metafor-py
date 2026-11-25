@@ -1,0 +1,17 @@
+:root {
+  --mf-ink: #18353d;
+  --mf-accent: #176d78;
+  --mf-soft: #e9f3f2;
+  --mf-line: #c9d9d7;
+}
+
+body { color: var(--mf-ink); }
+h1, h2, h3 { color: var(--mf-ink); }
+a { color: var(--mf-accent); }
+a:hover { color: #a64b26; }
+.wy-nav-content { max-width: 1100px; }
+.wy-side-nav-search { background: var(--mf-ink); }
+.wy-nav-top { background: var(--mf-ink); }
+table.docutils { border-color: var(--mf-line); }
+table.docutils th { background: var(--mf-soft); color: var(--mf-ink); }
+blockquote { border-left: 4px solid var(--mf-accent); padding-left: 1em; }
